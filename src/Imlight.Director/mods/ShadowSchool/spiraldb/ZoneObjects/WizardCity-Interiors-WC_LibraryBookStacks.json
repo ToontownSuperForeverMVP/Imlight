@@ -1,0 +1,8 @@
+{
+  "Zone": "WizardCity/Interiors/WC_LibraryBookStacks",
+  "Notes": "Shadow School: Vespera Quillmoor (template 1880000100) and Corvin Ashgrave (template 1880000101) stand together in the Library Book Stacks, on the loaded aisle near the room entrance. Their positions are anchored to the active room geometry; keep both inside the loaded room footprint.",
+  "Objects": [
+    { "Name": "ShadowSchool Unlisted Tutor", "TemplateID": 1880000100, "X": 6400, "Y": -1104, "Z": 0, "Yaw": 1.65, "Scale": 1 },
+    { "Name": "ShadowSchool-Vendor", "TemplateID": 1880000101, "X": 6400, "Y": -1004, "Z": 0, "Yaw": 1.65, "Scale": 1 }
+  ]
+}

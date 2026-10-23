@@ -46,7 +46,8 @@ internal static class RootArchiveLoader {
     public static void ReloadRootWad() {
         Logger.Information("Loading Root.wad into memory..");
 
-        s_rootWad = ResourceWad();
+        // Mods build their files from the game's own Root.wad and lay them over it (Mods/RootOverlay.cs).
+        s_rootWad = Imlight.CoreLib.Mods.RootOverlay.Apply(ResourceWad());
         if (s_rootWad is not null) {
             IsLoaded = true;
         }

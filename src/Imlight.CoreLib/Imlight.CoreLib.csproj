@@ -5,6 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <InternalsVisibleTo Include="Imlight.CoreLib.Tests" />
+        <InternalsVisibleTo Include="Imlight.AgentScript" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Akka" Version="1.5.33" />
         <PackageReference Include="Akka.Remote" Version="1.5.33" />
         <PackageReference Include="LibGit2Sharp" Version="0.32.0" />

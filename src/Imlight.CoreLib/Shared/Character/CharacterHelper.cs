@@ -105,6 +105,14 @@ internal static class CharacterHelper {
     }
 
     /// <summary>
+    /// Whether a new character may have this school: the seven, and Shadow when the Shadow School mod is on.
+    /// </summary>
+    internal static bool IsCreatableSchool(MagicSchool school)
+        => school is MagicSchool.Fire or MagicSchool.Ice or MagicSchool.Storm or MagicSchool.Myth
+            or MagicSchool.Life or MagicSchool.Death or MagicSchool.Balance
+            || (school == MagicSchool.Shadow && Imlight.CoreLib.Mods.ShadowSchool.ShadowSchoolMod.Enabled);
+
+    /// <summary>
     /// Creates a character from the character creation screen.
     /// </summary>
     /// <param name="creationInfo">The character creation information.</param>

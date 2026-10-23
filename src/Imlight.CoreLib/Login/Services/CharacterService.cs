@@ -87,6 +87,15 @@ internal class CharacterService(SessionActor parentActor) : MessageService(paren
                 return;
             }
 
+            // Only the schools the school page offers: the seven, and Shadow when the Shadow School mod is on.
+            if (!CharacterHelper.IsCreatableSchool((MagicSchool) charData.m_schoolOfFocus)) {
+                Logger.Warning("SessionActor {SessionId} account {accountUsername} tried to create a character of school {School}.",
+                    Logger.Args(SessionActor.SessionID, account.Username, charData.m_schoolOfFocus));
+                SendToSocket(new LOGIN_7_PROTOCOL.MSG_CREATECHARACTERRESPONSE { ErrorCode = 1 });
+
+                return;
+            }
+
             var newCharacter = CharacterHelper.CreateCharacterFromCreationInfo(charData);
             var createdCharacter = account.AddCharacter(newCharacter);
 

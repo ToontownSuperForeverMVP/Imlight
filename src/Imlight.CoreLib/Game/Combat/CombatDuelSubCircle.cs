@@ -50,6 +50,7 @@ using Imlight.Common;
 using Imlight.CoreLib.Game.PvP.Data;
 using Imlight.CoreLib.Game.Spells;
 using Imlight.CoreLib.Game.Zone.Components;
+using Imlight.CoreLib.Mods.ShadowSchool;
 using Imlight.CoreLib.Shared.Behaviors;
 using Imlight.CoreLib.Shared.Packets;
 using Imlight.CoreLib.Shared.Resources;
@@ -560,6 +561,7 @@ public class CombatDuelSubCircle {
     internal bool CanBeBeguiled => _wizard is not null || _bossOverride?.Beguilable != false;
 
     private int MaxShadowPips => _wizard is null ? BossShadowPips.Most > 0 ? BossShadowPips.Most : s_creatureMaxShadowPips
+        : IsShadowStudent && !_cheatShadowMagic ? ShadowPipRules.MAX_SHADOW_PIPS
         : ParticipantGameStats?.m_shadowPipSlots is int slots and > 0 ? Math.Min(slots, NO_SHADOW_LIMIT)
         : s_randomizeShadowPips ? 1 + Randomization.Randomizer.PickIndex(_wizard, "ShadowPipLimit", 0, RANDOM_SHADOW_LIMIT_MAX)
         : s_playerMaxShadowPips;
@@ -592,6 +594,15 @@ public class CombatDuelSubCircle {
         var pipCount = CombatParticipant.m_pipCount;
         var max = MaxShadowPips;
         if (!HasShadowMagic) {
+            return;
+        }
+
+        // A Shadow wizard's Shadow Pips come on a fixed schedule, not from the rating (ShadowPipRules.cs).
+        if (IsShadowStudent && !_cheatShadowMagic) {
+            if (ShadowPipRules.RefillsAt(_round) && pipCount.m_shadowPips < max) {
+                pipCount.m_shadowPips++;
+            }
+
             return;
         }
 
@@ -814,9 +825,15 @@ public class CombatDuelSubCircle {
     // .pip give shadow: shadow slots for the rest of this battle, so the given pips show on the circle.
     private bool _cheatShadowMagic;
 
-    private bool HasShadowMagic => _cheatShadowMagic
+    private bool HasShadowMagic => _cheatShadowMagic || IsShadowStudent
         || (_wizard is null ? s_shadowPips && !BossHasNoShadowPips && (CreatureHasShadowMagic || BossShadowPips.Most > 0)
                             : s_shadowPips || HasOwnShadowMagic);
+
+    // A wizard whose school of focus is Shadow (Shadow School mod): Shadow Pips by ShadowPipRules.
+    private bool IsShadowStudent => _wizard is not null && ShadowSchoolMod.IsShadowWizard(_wizard);
+
+    // The round the last pip gain was for, counting from 1 (0 when the caller did not say).
+    private int _round;
 
     private static readonly MagicSchool[] s_pipSchools = [
         MagicSchool.Balance, MagicSchool.Death, MagicSchool.Fire, MagicSchool.Ice,
@@ -1674,6 +1691,11 @@ public class CombatDuelSubCircle {
                 pipCount.m_genericPips = 0;
                 pipCount.m_powerPips -= (byte) excessPips;
             }
+        }
+
+        // A Shadow wizard starts every battle with a Shadow Pip (ShadowPipRules.cs).
+        if (IsShadowStudent) {
+            pipCount.m_shadowPips = ShadowPipRules.STARTING_SHADOW_PIPS;
         }
 
         return pipCount;

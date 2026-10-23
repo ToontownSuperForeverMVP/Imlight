@@ -1,0 +1,140 @@
+# Shadow School strings. "Key = Text"; [Name] chooses the lang file (Locale/<locale>/<Name>.lang) the keys go in.
+# ShadowSchool is the mod's own file: the game shows ShadowSchool_<Key> from it. Other sections add to the game's file.
+# Keep \n, $...$ and <...> markup as the game writes it.
+
+[CharCreation]
+# The description on the school page when Shadow is chosen (CLASS_RESULT_<page index + 1>; the page's Shadow index is 7).
+CLASS_RESULT_8 = Shadow Wizards carry a magic Ravenwood has never taught. You will enroll as a provisional student and learn from an unlisted tutor. This school follows its own story: in time, your wizard will defy Ravenwood itself for the right to learn.
+CLASS_SCHOOL_7 = Shadow
+
+[ShadowSchool]
+SchoolButton = Shadow
+TutorName = Vespera Quillmoor
+
+# Spell names.
+Spell_DarkSprite = Dark Sprite
+Spell_DarkEmpower = Dark Empower
+Spell_ShadowTroll = Shadow Troll
+Spell_TowerShield = Tower Shield
+Spell_ShadowBanshee = Shadow Banshee
+Spell_ShadowTrap = Shadow Trap
+Spell_Shadowblade = Shadowblade
+Spell_Humongofrog = Humongofrog
+Spell_Helephant = Helephant
+Spell_Shadowspear = Shadowspear
+Spell_Minotaur = Minotaur
+Spell_StormShark = Storm Shark
+Spell_Triton = Triton
+Spell_FrostGiant = Frost Giant
+
+# Descriptions where the donor's own would be wrong (the rest keep the donor's).
+Desc_DarkEmpower = Gain $eA$ $Pips_image$
+Desc_ShadowBanshee = $eA$-$eA5$ $dT_image$$Damage_image$
+Desc_Shadowblade = +$eA$% to next $dT_image$ $Damage_image$ spell
+Desc_Humongofrog = $All_Enemies_Square_image$: $eA$-$eA5$ $dT_image$$Damage_image$
+Desc_StormShark = $eA$-$eA5$ $dT_image$$Damage_image$
+
+# The Shadow vendor and the 80 pieces of Shadow equipment (ShadowGear.cs: slot, tier, donor).
+VendorName = Corvin Ashgrave
+VendorShopTitle = Shadow Equipment
+# Item names: <tier title> Shadow <slot>. The tier titles are ShadowGear.TierTitle's.
+Item_Hat_5 = Novice's Shadow Hat
+Item_Hat_10 = Apprentice's Shadow Hat
+Item_Hat_15 = Adept's Shadow Hat
+Item_Hat_20 = Scholar's Shadow Hat
+Item_Hat_25 = Disciple's Shadow Hat
+Item_Hat_30 = Acolyte's Shadow Hat
+Item_Hat_35 = Cabalist's Shadow Hat
+Item_Hat_40 = Master's Shadow Hat
+Item_Hat_45 = Archon's Shadow Hat
+Item_Hat_50 = Umbral Shadow Hat
+Item_Robe_5 = Novice's Shadow Robe
+Item_Robe_10 = Apprentice's Shadow Robe
+Item_Robe_15 = Adept's Shadow Robe
+Item_Robe_20 = Scholar's Shadow Robe
+Item_Robe_25 = Disciple's Shadow Robe
+Item_Robe_30 = Acolyte's Shadow Robe
+Item_Robe_35 = Cabalist's Shadow Robe
+Item_Robe_40 = Master's Shadow Robe
+Item_Robe_45 = Archon's Shadow Robe
+Item_Robe_50 = Umbral Shadow Robe
+Item_Boots_5 = Novice's Shadow Boots
+Item_Boots_10 = Apprentice's Shadow Boots
+Item_Boots_15 = Adept's Shadow Boots
+Item_Boots_20 = Scholar's Shadow Boots
+Item_Boots_25 = Disciple's Shadow Boots
+Item_Boots_30 = Acolyte's Shadow Boots
+Item_Boots_35 = Cabalist's Shadow Boots
+Item_Boots_40 = Master's Shadow Boots
+Item_Boots_45 = Archon's Shadow Boots
+Item_Boots_50 = Umbral Shadow Boots
+Item_Wand_5 = Novice's Shadow Wand
+Item_Wand_10 = Apprentice's Shadow Wand
+Item_Wand_15 = Adept's Shadow Wand
+Item_Wand_20 = Scholar's Shadow Wand
+Item_Wand_25 = Disciple's Shadow Wand
+Item_Wand_30 = Acolyte's Shadow Wand
+Item_Wand_35 = Cabalist's Shadow Wand
+Item_Wand_40 = Master's Shadow Wand
+Item_Wand_45 = Archon's Shadow Wand
+Item_Wand_50 = Umbral Shadow Wand
+Item_Athame_5 = Novice's Shadow Athame
+Item_Athame_10 = Apprentice's Shadow Athame
+Item_Athame_15 = Adept's Shadow Athame
+Item_Athame_20 = Scholar's Shadow Athame
+Item_Athame_25 = Disciple's Shadow Athame
+Item_Athame_30 = Acolyte's Shadow Athame
+Item_Athame_35 = Cabalist's Shadow Athame
+Item_Athame_40 = Master's Shadow Athame
+Item_Athame_45 = Archon's Shadow Athame
+Item_Athame_50 = Umbral Shadow Athame
+Item_Amulet_5 = Novice's Shadow Amulet
+Item_Amulet_10 = Apprentice's Shadow Amulet
+Item_Amulet_15 = Adept's Shadow Amulet
+Item_Amulet_20 = Scholar's Shadow Amulet
+Item_Amulet_25 = Disciple's Shadow Amulet
+Item_Amulet_30 = Acolyte's Shadow Amulet
+Item_Amulet_35 = Cabalist's Shadow Amulet
+Item_Amulet_40 = Master's Shadow Amulet
+Item_Amulet_45 = Archon's Shadow Amulet
+Item_Amulet_50 = Umbral Shadow Amulet
+Item_Ring_5 = Novice's Shadow Ring
+Item_Ring_10 = Apprentice's Shadow Ring
+Item_Ring_15 = Adept's Shadow Ring
+Item_Ring_20 = Scholar's Shadow Ring
+Item_Ring_25 = Disciple's Shadow Ring
+Item_Ring_30 = Acolyte's Shadow Ring
+Item_Ring_35 = Cabalist's Shadow Ring
+Item_Ring_40 = Master's Shadow Ring
+Item_Ring_45 = Archon's Shadow Ring
+Item_Ring_50 = Umbral Shadow Ring
+Item_Deck_5 = Novice's Shadow Deck
+Item_Deck_10 = Apprentice's Shadow Deck
+Item_Deck_15 = Adept's Shadow Deck
+Item_Deck_20 = Scholar's Shadow Deck
+Item_Deck_25 = Disciple's Shadow Deck
+Item_Deck_30 = Acolyte's Shadow Deck
+Item_Deck_35 = Cabalist's Shadow Deck
+Item_Deck_40 = Master's Shadow Deck
+Item_Deck_45 = Archon's Shadow Deck
+Item_Deck_50 = Umbral Shadow Deck
+
+# Wizard City enrollment and per-character Three Streets check-ins.
+EnrollmentTutorIntro = There is no eighth tower in Ravenwood. That does not make your magic imaginary. I can teach you here, in the stacks. Learn enough to make your own judgments, and do not mistake secrecy for wisdom.
+EnrollmentLincolnReferral = The Shadow magic you carry is not taught in Ravenwood's seven towers. Vespera Quillmoor has studied what the others cannot teach. She keeps to the Library Book Stacks; go there, and she will explain how you can learn safely.
+EnrollmentLocation = Wizard City|Library Book Stacks
+TritonCheckInTitle = Questions in the Dark
+TritonCheckInInfo = Tell Vespera what you learned while helping Triton Avenue.
+TritonCheckInGoal = Speak with Vespera Quillmoor
+TritonCheckInOffer = The work in Triton Avenue is done. Tell me what you learned.
+TritonCheckInReaction = You were right to ask what gave the dead their strength. Duncan can admire Malistaire without making every question forbidden. You stopped the danger and kept the right to ask why it worked.
+FirecatCheckInTitle = A Cure, Not a Chain
+FirecatCheckInInfo = Tell Vespera how you helped the Fire Elves.
+FirecatCheckInGoal = Speak with Vespera Quillmoor
+FirecatCheckInOffer = You have finished the work in Firecat Alley. Tell me what you saw.
+FirecatCheckInReaction = You helped Gretta cure the Fire Elves instead of trying to command them. Reversing an enchantment takes more care than forcing another will on top of it.
+CyclopsCheckInTitle = Orders and Answers
+CyclopsCheckInInfo = Tell Vespera how you helped the students in Cyclops Lane.
+CyclopsCheckInGoal = Speak with Vespera Quillmoor
+CyclopsCheckInOffer = You have finished the work in Cyclops Lane. Tell me what you found.
+CyclopsCheckInReaction = Cyrus's orders kept people alive, but a command can still become a cage. You found the students and dealt with Akilles without treating every disagreement as disobedience.

@@ -82,21 +82,23 @@ internal class TrainService(SessionActor sessionActor) : MessageService(sessionA
         // doesn't even send an interaction message upon training.
         var wizard = GetActiveWizard();
 
-        // Ensure that the training index is within the bounds of the spell inventory.
-        if (message.TrainingIndex < 0 || message.TrainingIndex >= trainerComponent.SpellInventory.Count) {
-            Logger.Error("Wizard {0} attempted to train spell at index {1}, but it is out of bounds.",
-                Logger.Args(wizard.PlayerNameBehavior.GetWizardName(), message.TrainingIndex));
+        // The same rules as the list the trainer shows (InteractTrainerComponent.Evaluate): a request for a spell the
+        // list would not let this wizard train (too low a level, too few training points, a missing earlier spell,
+        // an index past the list) is refused, whatever the client sent.
+        var check = trainerComponent.Evaluate(wizard, message.TrainingIndex);
+        if (check is null || !check.CanTrain) {
+            Logger.Warning("Wizard {0} (level {1}) asked to train index {2} of {3}, which the trainer does not allow: {4}.",
+                Logger.Args(wizard.PlayerNameBehavior.GetWizardName(), wizard.MagicSchoolBehavior.Level, message.TrainingIndex,
+                    response.ZoneObject.ActiveGameObject.m_debugName,
+                    check is null ? "no such spell" : check.Known ? "already known" : check.TooLowOrTooPoor
+                        ? $"needs level {check.RequiredLevel} and {check.Cost} training points" : "needs an earlier spell"));
 
             return;
         }
 
         var spellEntry = trainerComponent.SpellInventory[message.TrainingIndex];
-
-        // In randomizer mode the trainer offered this wizard's swapped spell; teach that one.
-        var spellId = trainerComponent.IsTestTrainer
-            ? (uint) spellEntry.TemplateID
-            : Randomizer.MapSpell(wizard, (uint) spellEntry.TemplateID);
-        var spellTemplate = (SpellTemplate) CoreObjectFactory.GetCoreTemplate(spellId);
+        var spellId = check.SpellId;
+        var spellTemplate = check.Spell;
 
         if (BadgeGate.Blocks(spellTemplate?.m_purchaseRequirements, spellEntry.TemplateID, SessionActor.ActorRef, GetActiveGameObject(), wizard, SessionActor.GetZoneActor())) {
             Logger.Warning("Wizard {0} attempted to train spell {1} without the badge it requires.",
@@ -105,15 +107,7 @@ internal class TrainService(SessionActor sessionActor) : MessageService(sessionA
             return;
         }
 
-        // Determine if the wizard has enough training points to learn the spell.
-        // Wizards that are of the same magic school as the spell they are training have a cost of 0.
-        var spellCost = trainerComponent.CostFor(wizard, spellTemplate);
-        if (wizard.MagicSchoolBehavior.TrainingPoints < spellCost) {
-            Logger.Error("Wizard {0} attempted to train spell {1} but does not have enough training points.",
-                Logger.Args(wizard.PlayerNameBehavior.GetWizardName(), spellId));
-
-            return;
-        }
+        var spellCost = check.Cost;
 
         var spell = SpellFactory.GetSpell(spellId);
         var spellLearnedSuccess = wizard.LearnSpell(spell);

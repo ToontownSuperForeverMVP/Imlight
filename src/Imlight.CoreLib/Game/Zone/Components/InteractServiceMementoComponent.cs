@@ -87,6 +87,7 @@ internal sealed class InteractServiceMementoComponent(ZoneEntity entity)
     private readonly float _interactionRadius = 300.0f;
     private readonly Dictionary<ulong, IActorRef> _playersInInteractionRange = [];
     private readonly Dictionary<ulong, IActorRef> _playersInRenderRange = [];
+    private readonly Dictionary<ulong, string> _lastPersonaGoalOptionSignatures = [];
     private List<IServiceComponent> _serviceComponents = [];
     private Dictionary<int, IServiceComponent> _optionIndexToComponent = [];
     private readonly Dictionary<IServiceComponent, int> _componentFirstOption = [];
@@ -288,6 +289,7 @@ internal sealed class InteractServiceMementoComponent(ZoneEntity entity)
         }
 
         RefreshServiceMomento(wizard);
+        _lastPersonaGoalOptionSignatures[wizard.CharId] = GetPersonaGoalOptionSignature(_serviceMemento.m_serviceOptions);
 
         // If we have no service options, do not send anything.
         if (_serviceMemento.m_serviceOptions.Count <= 0) {
@@ -317,6 +319,14 @@ internal sealed class InteractServiceMementoComponent(ZoneEntity entity)
 
         playerActor.Tell(npcOptionsMsg);
     }
+
+    internal static string GetPersonaGoalOptionSignature(IEnumerable<ServiceOptionBase> options)
+        => string.Join("|", options
+            .OfType<GoalEntry>()
+            .Where(option => string.Equals(option.m_serviceName, "QuestPersonaGoalService", StringComparison.Ordinal))
+            .OrderBy(option => option.m_questID.Full)
+            .ThenBy(option => option.m_goalID.Full)
+            .Select(option => $"{option.m_questID.Full}:{option.m_goalID.Full}"));
 
     private void SendLeaveServiceRange(IActorRef playerActor) {
         var msg = new GAME_5_PROTOCOL.MSG_LEAVESERVICERANGE {
@@ -437,10 +447,31 @@ internal sealed class InteractServiceMementoComponent(ZoneEntity entity)
 
         // Collect wizbangs from components that have service options for this player.
         var activeWizBangs = new List<WizBangs>();
+        var playerOptions = new List<ServiceOptionBase>();
         foreach (var component in _serviceComponents) {
             var serviceOptions = OptionsFor(component, playerWizard);
             if (serviceOptions.Count > 0) {
                 activeWizBangs.Add(component.WizBang);
+                playerOptions.AddRange(serviceOptions);
+            }
+        }
+
+        // The client receives NPC options when the player enters interaction range. A persona goal can
+        // become active later while the player remains beside the NPC (for example, after accepting a
+        // check-in quest), so refresh that player's menu when its persona-goal options change.
+        if (!InteractTrainerComponent.IsShowingSpellOptions(Entity, playerWizard)) {
+            var playerId = playerWizard.CharId;
+            var personaGoalSignature = GetPersonaGoalOptionSignature(playerOptions);
+            if (!_lastPersonaGoalOptionSignatures.TryGetValue(playerId, out var previousSignature)) {
+                _lastPersonaGoalOptionSignatures[playerId] = personaGoalSignature;
+            }
+            else if (previousSignature != personaGoalSignature
+                     && _playersInInteractionRange.ContainsValue(playerActor)) {
+                SendLeaveServiceRange(playerActor);
+                SendActorServiceOptions(playerActor);
+            }
+            else {
+                _lastPersonaGoalOptionSignatures[playerId] = personaGoalSignature;
             }
         }
 

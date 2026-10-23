@@ -224,8 +224,17 @@ internal static class CharacterEffectHelper {
         stats.m_healIncBonusPercentAll += statistic.m_healIncBonusPercent;
         stats.m_stunResistancePercent += statistic.m_stunResistancePercent;
         LogBattleStat("added", effectName, statistic);
+        stats.m_bonusShadowPipRating += statistic.m_shadowPipRating;
+        stats.m_archmasteryBonus += statistic.m_archmastery;
 
-        if (effectName.Contains("ArmorPiercing")) {
+        if (effectName.Contains("FishingLuck")) {
+            ApplyRatingEffect(ref stats.m_fishingLuckBonusPercent, ref stats.m_fishingLuckBonusPercentAll,
+                effectName, statistic.m_fishingLuckBonusPercent);
+        }
+        else if (effectName.Contains("PipConversion")) {
+            ApplyPipConversion(stats, effectName, statistic.m_pipConversionRating);
+        }
+        else if (effectName.Contains("ArmorPiercing")) {
             ApplyArmorPiercing(stats, effectName, statistic.m_armorPiercingBonusPercent);
         }
         else if (effectName.Contains("Damage") && !effectName.Contains("Reduce")) {
@@ -281,8 +290,17 @@ internal static class CharacterEffectHelper {
         stats.m_healIncBonusPercentAll -= statistic.m_healIncBonusPercent;
         stats.m_stunResistancePercent -= statistic.m_stunResistancePercent;
         LogBattleStat("removed", effectName, statistic);
+        stats.m_bonusShadowPipRating -= statistic.m_shadowPipRating;
+        stats.m_archmasteryBonus -= statistic.m_archmastery;
 
-        if (effectName.Contains("ArmorPiercing")) {
+        if (effectName.Contains("FishingLuck")) {
+            ApplyRatingEffect(ref stats.m_fishingLuckBonusPercent, ref stats.m_fishingLuckBonusPercentAll,
+                effectName, -statistic.m_fishingLuckBonusPercent);
+        }
+        else if (effectName.Contains("PipConversion")) {
+            ApplyPipConversion(stats, effectName, -statistic.m_pipConversionRating);
+        }
+        else if (effectName.Contains("ArmorPiercing")) {
             ApplyArmorPiercing(stats, effectName, -statistic.m_armorPiercingBonusPercent);
         }
         else if (effectName.Contains("Damage") && !effectName.Contains("Reduce")) {
@@ -330,9 +348,6 @@ internal static class CharacterEffectHelper {
         }
     }
 
-    /// <summary>
-    /// Pip Conversion rating, per school or for all schools. Shadow pip conversion is the shadow pip stat, not this.
-    /// </summary>
     private static void ApplyPipConversion(ServerWizGameStats stats, string effectName, float rating) {
         var school = effectName.Contains("All") ? null : ExtractSchoolName(effectName);
         if (school == "Shadow") {

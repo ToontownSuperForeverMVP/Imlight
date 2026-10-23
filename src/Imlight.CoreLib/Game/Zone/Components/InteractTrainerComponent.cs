@@ -357,86 +357,98 @@ internal sealed class InteractTrainerComponent(ZoneEntity entity) : ZoneEntityCo
         List<ServiceOptionBase> newServiceOptions = [];
 
         foreach (var i in OfferedIndexes(wizard)) {
-            // In randomizer mode the wizard learns a swapped spell, so the trainer offers that one instead.
-            var trainerSpellId = (uint) SpellInventory[i].TemplateID;
-            var spellId = IsTestTrainer ? trainerSpellId : Randomizer.MapSpell(wizard, trainerSpellId);
-            if (CoreObjectFactory.GetCoreTemplate(spellId) is not SpellTemplate spellTemplate) {
-                continue;
-            }
-
-            var hasSpell = wizard.SpellbookBehavior.HasSpell(spellId);
-            if (hasSpell) {
+            var check = Evaluate(wizard, i);
+            if (check is null || check.Known) {
                 continue;
             }
 
             // Copy the shared option so one wizard's view never leaks into another's.
             var newBase = (WizTrainingOption) _serviceOptionBases[i] with { };
-            if (spellId != trainerSpellId) {
-                newBase.m_spellName = spellTemplate.m_name;
-                newBase.m_displayKey = spellTemplate.m_displayName;
+            if (check.SpellId != (uint) SpellInventory[i].TemplateID) {
+                newBase.m_spellName = check.Spell.m_name;
+                newBase.m_displayKey = check.Spell.m_displayName;
             }
 
-            // Training costs nothing for the wizard's own school (or for everyone with FreeTraining), else one point.
-            newBase.m_trainingCost = CostFor(wizard, spellTemplate);
-
-            // NoLevelRequirements lets any level train any spell.
-            var requiredLevel = Randomizer.NoLevelRequirements ? 1 : SpellInventory[i].Level;
-            newBase.m_requiredLevel = requiredLevel;
-
-            // Check if wizard has enough training points to train the spell, and if the
-            // wizard is high enough level to train the spell.
-            if (wizard.MagicSchoolBehavior.TrainingPoints < newBase.m_trainingCost
-                    || wizard.MagicSchoolBehavior.Level < requiredLevel) {
-                newBase.m_bCanTrain = false;
-                newBase.m_failedRequirement = null;
-
-                newServiceOptions.Add(newBase);
-                continue;
-            }
-
-            // If the spell has no required spell, it can be trained, else check if the wizard has the required spell.
-            var originalRequiredId = RequiredSpellFor(wizard, SpellInventory[i]);
-            if (originalRequiredId == 0) {
-                newBase.m_bCanTrain = true;
-                newBase.m_failedRequirement = null;
-                newBase.m_requirements = null;
-            }
-            else {
-                // The required spell is swapped the same way, so a randomized chain still lines up.
-                var requiredSpellId = Randomizer.MapSpell(wizard, (uint) originalRequiredId);
-                if (CoreObjectFactory.GetCoreTemplate(requiredSpellId) is not SpellTemplate reqSpellTemplate) {
-                    // A requirement that can't be found doesn't block training.
-                    newBase.m_bCanTrain = true;
-                    newBase.m_failedRequirement = null;
-                    newBase.m_requirements = null;
-                    newServiceOptions.Add(newBase);
-                    continue;
+            newBase.m_trainingCost = check.Cost;
+            newBase.m_requiredLevel = check.RequiredLevel;
+            newBase.m_bCanTrain = check.CanTrain;
+            newBase.m_failedRequirement = null;
+            if (check.RequiredSpell is { } required) {
+                if (check.RequiredSpellSwapped) {
+                    newBase.m_requirements = HasSpellRequirement(required);
                 }
 
-                if (requiredSpellId != SpellInventory[i].RequiredSpellID) {
-                    newBase.m_requirements = HasSpellRequirement(reqSpellTemplate);
-                }
-
-                var hasReqSpell = wizard.SpellbookBehavior.HasSpell(requiredSpellId);
-
-                if (!hasReqSpell) {
-                    newBase.m_bCanTrain = false;
+                if (!check.HasRequiredSpell && !check.TooLowOrTooPoor) {
                     newBase.m_failedRequirement = new ReqHasSpell() {
                         m_applyNOT = false,
                         m_operator = Operator.ROP_AND,
-                        m_spellName = reqSpellTemplate.m_name
+                        m_spellName = required.m_name
                     };
                 }
-                else {
-                    newBase.m_bCanTrain = true;
-                    newBase.m_failedRequirement = null;
-                }
+            }
+            else if (!check.TooLowOrTooPoor) {
+                newBase.m_requirements = null;
             }
 
             newServiceOptions.Add(newBase);
         }
 
         return newServiceOptions;
+    }
+
+    /// <summary>
+    /// Whether a wizard may learn the spell at <paramref name="index"/> of this trainer's list, and what it costs.
+    /// The spell list the trainer shows and the training request (TrainService) both use this, so a request the
+    /// list would not allow is refused.
+    /// </summary>
+    internal sealed record TrainingCheck(
+        uint SpellId, SpellTemplate Spell, bool Known, int Cost, int RequiredLevel, bool TooLowOrTooPoor,
+        SpellTemplate RequiredSpell, bool RequiredSpellSwapped, bool HasRequiredSpell) {
+
+        public bool CanTrain => !Known && !TooLowOrTooPoor && HasRequiredSpell;
+
+    }
+
+    /// <returns>The check, or null when the index or its spell does not exist.</returns>
+    internal TrainingCheck Evaluate(Wizard wizard, int index) {
+        if (wizard is null || index < 0 || index >= SpellInventory.Count) {
+            return null;
+        }
+
+        // In randomizer mode the wizard learns a swapped spell, so the trainer offers that one instead.
+        var trainerSpellId = (uint) SpellInventory[index].TemplateID;
+        var spellId = IsTestTrainer ? trainerSpellId : Randomizer.MapSpell(wizard, trainerSpellId);
+        if (CoreObjectFactory.GetCoreTemplate(spellId) is not SpellTemplate spellTemplate) {
+            return null;
+        }
+
+        var known = wizard.SpellbookBehavior.HasSpell(spellId);
+
+        // Training costs nothing for the wizard's own school (or for everyone with FreeTraining), else one point.
+        var cost = CostFor(wizard, spellTemplate);
+
+        // NoLevelRequirements lets any level train any spell.
+        var requiredLevel = Randomizer.NoLevelRequirements ? 1 : SpellInventory[index].Level;
+        var tooLowOrTooPoor = wizard.MagicSchoolBehavior.TrainingPoints < cost
+            || wizard.MagicSchoolBehavior.Level < requiredLevel;
+
+        // The required spell is swapped the same way, so a randomized chain still lines up. A requirement that
+        // can't be found doesn't block training.
+        SpellTemplate required = null;
+        var swapped = false;
+        var hasRequired = true;
+        var originalRequiredId = RequiredSpellFor(wizard, SpellInventory[index]);
+        if (originalRequiredId != 0) {
+            var requiredSpellId = Randomizer.MapSpell(wizard, (uint) originalRequiredId);
+            if (CoreObjectFactory.GetCoreTemplate(requiredSpellId) is SpellTemplate reqSpellTemplate) {
+                required = reqSpellTemplate;
+                swapped = requiredSpellId != SpellInventory[index].RequiredSpellID;
+                hasRequired = wizard.SpellbookBehavior.HasSpell(requiredSpellId);
+            }
+        }
+
+        return new TrainingCheck(spellId, spellTemplate, known, cost, requiredLevel, tooLowOrTooPoor,
+            required, swapped, hasRequired);
     }
 
     public void OnServiceInteraction(IActorRef playerActor, Wizard playerCharacter, CoreObject playerObject, uint serviceOptionIndex) {

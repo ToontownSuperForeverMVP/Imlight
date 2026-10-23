@@ -688,11 +688,17 @@ internal static class ZoneObjects {
         var zones = new Dictionary<string, ZoneObjectFile>();
         var off = new HashSet<string>();
         var dir = Path.Combine(SpiralDB.ExtraPath, FOLDER);
-        if (!Directory.Exists(dir)) {
-            return zones;
-        }
 
-        foreach (var path in Directory.GetFiles(dir, "*.json")) {
+        // spiraldb-extra first, then the enabled mods' own (Mods/ModRegistry.cs). A mod's file for a zone that
+        // already has one adds its objects, creatures and removals to it.
+        var paths = (Directory.Exists(dir) ? Directory.GetFiles(dir, "*.json") : [])
+            .Select(path => (Path: path, FromMod: false))
+            .Concat(Imlight.CoreLib.Mods.ModRegistry.SpiralDbFolders
+                .Select(mod => Path.Combine(mod, FOLDER))
+                .Where(Directory.Exists)
+                .SelectMany(modDir => Directory.GetFiles(modDir, "*.json").Select(path => (Path: path, FromMod: true))));
+
+        foreach (var (path, fromMod) in paths) {
             var fileName = Path.GetFileName(path);
             try {
                 var file = JsonSerializer.Deserialize<ZoneObjectFile>(File.ReadAllText(path), s_options);

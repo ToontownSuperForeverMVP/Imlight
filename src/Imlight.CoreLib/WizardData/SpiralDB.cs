@@ -195,6 +195,21 @@ public static class SpiralDB {
                 Logger.Information("Loaded {0} extra SpiralDB files from {1}.", Logger.Args(extraFiles, extraPath));
             }
 
+            // The enabled mods' spiraldb folders come last, so a mod's file wins over SpiralDB and spiraldb-extra.
+            foreach (var modPath in Imlight.CoreLib.Mods.ModRegistry.SpiralDbFolders) {
+                var modFiles = 0;
+                modFiles += LoadCreatureSpellbooks(modPath, spellbooks);
+                modFiles += LoadDropTables(modPath, dropTables);
+                modFiles += LoadNpcInventories(modPath, npcInventories);
+                modFiles += LoadNpcSpellInventories(modPath, npcSpellInventories);
+                modFiles += LoadNpcDropTables(modPath, npcDropTables);
+                modFiles += LoadTreasureCardInventories(modPath, treasureCardInventories);
+                modFiles += LoadQuestTemplates(modPath, questTemplatesBag, questTemplatesByName);
+                modFiles += LoadZoneData(modPath, zoneData);
+                filesLoaded += modFiles;
+                Logger.Information("Loaded {0} SpiralDB files from mod folder {1}.", Logger.Args(modFiles, modPath));
+            }
+
             // An extra quest replaces SpiralDB's quest of the same name.
             var questTemplates = questTemplatesBag
                 .Where(q => !questTemplatesByName.TryGetValue(q.m_questName, out var kept) || ReferenceEquals(kept, q))

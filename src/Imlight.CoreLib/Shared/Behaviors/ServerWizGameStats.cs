@@ -210,10 +210,15 @@ public class ServerWizGameStats : IClientTypeProvider<WizGameStats> {
         m_apBonusPercentAll = 0;
         m_dmgReducePercentAll = 0;
         m_dmgReduceFlatAll = 0;
+        m_fishingLuckBonusPercentAll = 0;
+        m_pipConversionRatingAll = 0;
+        m_pipConversionPercentAll = 0;
         m_healBonusPercentAll = 0;
         m_healIncBonusPercentAll = 0;
         m_powerPipBonusPercentAll = 0;
         m_stunResistancePercent = 0;
+        m_bonusShadowPipRating = 0;
+        m_archmasteryBonus = 0;
         m_criticalHitRatingAll = 0;
         m_blockRatingAll = 0;
         m_startingPips = 0;
@@ -229,6 +234,9 @@ public class ServerWizGameStats : IClientTypeProvider<WizGameStats> {
         this.m_baseMana = baseStats.m_mana;
         this.m_powerPipBase = baseStats.m_pipChance;
         this.m_energyMax = baseStats.m_petEnergy;
+        this.m_shadowPipRating = baseStats.m_shadowPipRating;
+        this.m_pipConversionBaseAllSchools = baseStats.m_pipConversionRatingAllSchools;
+        this.m_archmasteryBase = baseStats.m_archmastery;
     }
 
     /// <summary>
@@ -264,6 +272,16 @@ public class ServerWizGameStats : IClientTypeProvider<WizGameStats> {
             m_spellChargeBonusAll = m_spellChargeBonusAll,
             m_powerPipBase = m_powerPipBase,
             m_powerPipBonusPercentAll = m_powerPipBonusPercentAll,
+            m_pipConversionRatingAll = m_pipConversionRatingAll,
+            m_pipConversionRatingPerSchool = m_pipConversionRatingPerSchool,
+            m_pipConversionPercentAll = m_pipConversionPercentAll,
+            m_pipConversionPercentPerSchool = m_pipConversionPercentPerSchool,
+            m_pipConversionBaseAllSchools = m_pipConversionBaseAllSchools,
+            m_pipConversionBasePerSchool = m_pipConversionBasePerSchool,
+            m_shadowPipRating = m_shadowPipRating,
+            m_bonusShadowPipRating = m_bonusShadowPipRating,
+            m_archmasteryBase = m_archmasteryBase,
+            m_archmasteryBonusFlat = m_archmasteryBonus,
             m_xpPercentIncrease = m_xpPercentIncrease,
             // The client's cinematic re-simulates the crit from the rating and percent we send here.
             m_criticalHitPercentBySchool = ToChanceList(m_criticalHitRatingBySchool, Level),

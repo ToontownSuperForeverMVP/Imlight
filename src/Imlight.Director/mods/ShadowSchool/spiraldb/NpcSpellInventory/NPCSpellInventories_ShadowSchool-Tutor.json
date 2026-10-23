@@ -1,0 +1,20 @@
+{
+  "TemplateID": 1880000100,
+  "Notes": "Shadow School: the Unlisted Tutor (Vespera Quillmoor) teaches the curriculum of Mods/ShadowSchool/ShadowCurriculum.cs. A spell's id is the hash of its template name (ShadowSchool <Key>); the server checks this list against the curriculum at start. Each spell after the first two needs the one before it.",
+  "Spells": [
+    { "Key": "DarkSprite", "TemplateID": 199150487, "RequiredSpellID": 0, "Level": 1 },
+    { "Key": "DarkEmpower", "TemplateID": 2140065270, "RequiredSpellID": 0, "Level": 1 },
+    { "Key": "ShadowTroll", "TemplateID": 439559802, "RequiredSpellID": 199150487, "Level": 5 },
+    { "Key": "TowerShield", "TemplateID": 1982692805, "RequiredSpellID": 439559802, "Level": 8 },
+    { "Key": "ShadowBanshee", "TemplateID": 15407799, "RequiredSpellID": 1982692805, "Level": 10 },
+    { "Key": "ShadowTrap", "TemplateID": 408173178, "RequiredSpellID": 15407799, "Level": 16 },
+    { "Key": "Shadowblade", "TemplateID": 444152737, "RequiredSpellID": 408173178, "Level": 18 },
+    { "Key": "Humongofrog", "TemplateID": 633292175, "RequiredSpellID": 444152737, "Level": 22 },
+    { "Key": "Helephant", "TemplateID": 408847626, "RequiredSpellID": 633292175, "Level": 26 },
+    { "Key": "Shadowspear", "TemplateID": 1698663831, "RequiredSpellID": 408847626, "Level": 30 },
+    { "Key": "Minotaur", "TemplateID": 1020542922, "RequiredSpellID": 1698663831, "Level": 33 },
+    { "Key": "StormShark", "TemplateID": 2012960139, "RequiredSpellID": 1020542922, "Level": 38 },
+    { "Key": "Triton", "TemplateID": 2085682126, "RequiredSpellID": 2012960139, "Level": 42 },
+    { "Key": "FrostGiant", "TemplateID": 1528976351, "RequiredSpellID": 2085682126, "Level": 50 }
+  ]
+}
