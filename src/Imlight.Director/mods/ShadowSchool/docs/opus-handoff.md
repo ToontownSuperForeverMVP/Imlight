@@ -1,8 +1,9 @@
 # Shadow School handoff for Claude Opus 5.5
 
-Checkpoint stage: **D2.4 complete; D3 not started.** The dedicated development branch is `feature/shadow-school` in the
-`ToontownSuperForeverMVP/Imlight` fork. The checkpoint commit SHA is filled in after the branch commit is created.
-The fork's default branch remains `quality-assurance`.
+Checkpoint stage: **D2.4 complete; D3 not started.** Repository: `https://github.com/ToontownSuperForeverMVP/Imlight`.
+Development branch: `feature/shadow-school`. Latest implementation checkpoint commit: `61a5d0eb0b617d872963fc3ef6efcb7a64a5ffa9`.
+The fork's default branch remains `quality-assurance`; resolve the latest branch SHA from the branch head because this handoff
+is committed as a follow-up to the implementation checkpoint.
 
 ## Current implementation
 
