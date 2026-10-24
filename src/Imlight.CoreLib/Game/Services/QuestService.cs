@@ -45,6 +45,7 @@ using Imlight.Common;
 using Imlight.CoreLib.Game.DropTables;
 using Imlight.CoreLib.Game.Groups;
 using Imlight.CoreLib.Game.Madlibs;
+using Imlight.CoreLib.Game.Quests;
 using Imlight.CoreLib.Game.Requirements;
 using Imlight.CoreLib.Game.Requirements.Contexts;
 using Imlight.CoreLib.Game.Results;
@@ -108,6 +109,12 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
 
     private readonly List<PendingGoalCompletion> _pendingGoalCompletions = [];
     private bool _clientReportsPersonaCompletion;
+
+    // Above zero while a QA quest command runs: the steps it takes are reported as commands, not play.
+    private int _commandDepth;
+
+    private QuestProgressSource OwnProgressSource
+        => _commandDepth > 0 ? QuestProgressSource.Command : QuestProgressSource.Play;
 
     protected static Props Props(SessionActor parentActor)
         => Akka.Actor.Props.Create(() => new QuestService(parentActor));
@@ -263,7 +270,7 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
                 return;
             }
 
-            ShowGoalCompletionDialogue(gTemplate, questId, goalId);
+            ShowGoalCompletionDialogue(qTemplate, gTemplate, questId, goalId);
 
             _pendingGoalCompletions.Add(new PendingGoalCompletion(questId, goalId,
                 message.TransitionTarget, message.TransitionMessage, DateTime.UtcNow));
@@ -520,6 +527,10 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
                     continue;
                 }
 
+                if (!QuestProgressEvents.CanCompleteGoalFromZoneEvent(wizard, qTemplate, gTemplate, message.EventName)) {
+                    continue;
+                }
+
                 CompleteGoal(qInstance, gTemplate);
             }
         }
@@ -582,8 +593,19 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
 
     [MessageHandler(typeof(CHARACTER_103_PROTOCOL.MSG_QUESTCOMMAND))]
     private void ReceiveQuestCommand(CHARACTER_103_PROTOCOL.MSG_QUESTCOMMAND message) {
+        _commandDepth++;
+        try {
+            RunQuestCommand(message);
+        }
+        finally {
+            _commandDepth--;
+        }
+    }
+
+    private void RunQuestCommand(CHARACTER_103_PROTOCOL.MSG_QUESTCOMMAND message) {
         var wizard = GetActiveWizard();
         var questName = message.QuestName?.Trim() ?? string.Empty;
+
 
         switch (message.Action) {
             case "list":
@@ -713,6 +735,11 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
             return;
         }
 
+        if (!QuestProgressEvents.CanCompleteGoalFromCommand(GetActiveWizard(), qTemplate, goal)) {
+            CommandReply($"Goal '{goal.m_goalName}' can only be completed through its verified encounter.");
+            return;
+        }
+
         CommandReply($"Completing goal '{goal.m_goalName}' of '{qInstance.QuestName}'.");
         CompleteGoal(qInstance, goal);
     }
@@ -720,6 +747,12 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
     private void CommandCompleteQuest(QuestInstance qInstance, QuestTemplate qTemplate) {
         var wizard = GetActiveWizard();
         var questName = qInstance.QuestName;
+
+        if (!QuestProgressEvents.CanCompleteQuestFromCommand(wizard, qTemplate)) {
+            CommandReply($"Quest '{questName}' contains progress that can only be completed through verified encounters.");
+
+            return;
+        }
 
         // Walk the goals the way a player would: each completion starts the next goals and, after the last
         // one, completes the quest with its end results. Bounded so a looping quest cannot hang the session.
@@ -1040,6 +1073,14 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
 
         if (!_cachedQuestTemplates.Contains(quest)) {
             _cachedQuestTemplates.Add(quest);
+        }
+
+        QuestProgressEvents.QuestStarted(wizard, quest, OwnProgressSource);
+
+        // A verified outcome is stored before its event is queued. Replaying recorded events when a quest starts
+        // repairs the case where the character reconnects or accepts the campaign after that queue was lost.
+        foreach (var eventName in QuestProgressEvents.GetZoneEventsToReplay(wizard, quest)) {
+            Self.Tell(new ZONE_102_PROTOCOL.MSG_ZONEEVENTFORQUESTS { EventName = eventName });
         }
 
         SendQuestStartingMessage(quest, questInstance);
@@ -1390,7 +1431,7 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
 
         // Play goal start dialogue if it exists.
         var goalId = questInstance.GoalProgress.First(g => g.GoalName == goalTemplate.m_goalName).ID;
-        ShowGoalStartDialogue(goalTemplate, questInstance.ID, goalId);
+        ShowGoalStartDialogue(GetQuestTemplate(questInstance.QuestName), goalTemplate, questInstance.ID, goalId);
 
         // A zone-entry goal that starts while the player is already in its zone would otherwise wait for
         // the next zone attach. Complete it now, after the start message, as the attach path does.
@@ -1432,10 +1473,17 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
         Logger.Information("Quest goal complete: {0} quest '{1}' goal '{2}' ({3}, {4}).",
             Logger.Args(wizard.CharId, questInstance.QuestName, goalTemplate.m_goalName, goalTemplate.m_goalType, completion));
 
+        var source = completion switch {
+            GoalCompletion.Shared => QuestProgressSource.Shared,
+            GoalCompletion.CatchUp => QuestProgressSource.CatchUp,
+            _ => OwnProgressSource,
+        };
+        QuestProgressEvents.GoalCompleted(wizard, GetQuestTemplate(questInstance.QuestName), goalTemplate, source);
+
         SendCompleteGoal(questInstance.ID, gInstance.ID);
         if (completion != GoalCompletion.CatchUp) {
             if (showCompletionDialogue) {
-                ShowGoalCompletionDialogue(goalTemplate, questInstance.ID, gInstance.ID);
+                ShowGoalCompletionDialogue(GetQuestTemplate(questInstance.QuestName), goalTemplate, questInstance.ID, gInstance.ID);
             }
 
             // The player who completes it first tells the instance; the others run only their personal results.
@@ -1467,7 +1515,7 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
 
         if (!DetermineNextGoals(qTemplate, questInstance, out var gTemplates)) {
             if (completion != GoalCompletion.CatchUp) {
-                CompleteQuest(questInstance);
+                CompleteQuest(questInstance, source);
             }
 
             return;
@@ -1492,7 +1540,7 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
         });
     }
 
-    private void CompleteQuest(QuestInstance questInstance) {
+    private void CompleteQuest(QuestInstance questInstance, QuestProgressSource? source = null) {
         var wizard = GetActiveWizard();
 
         var xpScale = GetRunXpScale(wizard, questInstance.QuestName);
@@ -1550,6 +1598,9 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
                 LootList = spellRewardData
             });
         }
+
+        // After the quest's own results, so a mod reacting to it never stands between the player and the rewards.
+        QuestProgressEvents.QuestCompleted(wizard, qTemplate, source ?? OwnProgressSource);
 
         // Chain advance: completion stamps the "Complete" registry entry, which is the ReqHasEntry
         // prerequisite of the next quest in the dungeon's chain.
@@ -1968,21 +2019,24 @@ internal class QuestService(SessionActor sessionActor) : MessageService(sessionA
     }
 
     private void ShowQuestStartDialogue(QuestTemplate questTemplate)
-         => ShowDialogue(questTemplate.m_dialogList, "Start", "QuestStart");
+         => ShowDialogue(questTemplate, null, "Start", "QuestStart");
 
-    private void ShowGoalStartDialogue(GoalTemplate goalTemplate, ulong questId, ulong goalId)
-        => ShowDialogue(goalTemplate.m_dialogList, "Prep", "QuestStart", questId, goalId);
+    private void ShowGoalStartDialogue(QuestTemplate questTemplate, GoalTemplate goalTemplate, ulong questId, ulong goalId)
+        => ShowDialogue(questTemplate, goalTemplate, "Prep", "QuestStart", questId, goalId);
 
-    private void ShowGoalCompletionDialogue(GoalTemplate goalTemplate, ulong questId, ulong goalId)
-        => ShowDialogue(goalTemplate.m_dialogList, GOAL_COMPLETION_DIALOG_TAG, "Completion", questId, goalId);
+    private void ShowGoalCompletionDialogue(QuestTemplate questTemplate, GoalTemplate goalTemplate, ulong questId, ulong goalId)
+        => ShowDialogue(questTemplate, goalTemplate, GOAL_COMPLETION_DIALOG_TAG, "Completion", questId, goalId);
 
     private void ShowQuestCompletionDialogue(QuestTemplate questTemplate)
-        => ShowDialogue(questTemplate.m_dialogList, "Complete", "QuestComplete");
+        => ShowDialogue(questTemplate, null, "Complete", "QuestComplete");
 
-    private void ShowDialogue(ActorDialogListBase dialogListBase, string dialogTag, string completionType, ulong questId = 0, ulong goalId = 0) {
-        var dialog = FindDialogue(dialogListBase, dialogTag);
+    // The dialogue goes to this session's wizard only, so a mod may show this wizard its own version of it.
+    private void ShowDialogue(QuestTemplate questTemplate, GoalTemplate goalTemplate, string dialogTag, string completionType,
+                              ulong questId = 0, ulong goalId = 0) {
+        var dialog = FindDialogue(goalTemplate is null ? questTemplate.m_dialogList : goalTemplate.m_dialogList, dialogTag);
         if (dialog != null) {
-            SendActorDialog(dialog, completionType, questId, goalId);
+            SendActorDialog(QuestDialogueResolver.Resolve(GetActiveWizard(), questTemplate, goalTemplate, dialog),
+                completionType, questId, goalId);
         }
     }
 

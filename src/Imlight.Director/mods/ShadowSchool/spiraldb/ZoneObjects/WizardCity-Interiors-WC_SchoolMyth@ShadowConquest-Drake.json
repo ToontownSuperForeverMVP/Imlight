@@ -1,0 +1,44 @@
+{
+  "Zone": "WizardCity/Interiors/WC_SchoolMyth",
+  "Variant": "ShadowConquest-Drake",
+  "Notes": "Shadow School, Stage D2.2 (ConquestEncounters.cs): the private copy of the Myth School that Drake's binding opens for one Shadow wizard on the quest ShadowSchool-Conquest-Drake. Only a copy loaded with this variant uses this file; the public Myth School is untouched. From the zone's own gamedata.bin (read on a QA server, 2026-10-23): Cyrus Drake (WC-RAV-NPC02, template 38206, the Myth trainer) stands at (807.46, 13.78, 100.00), orientation 1.52576; players arrive at Start (-126.20, 25.01, 0.50). In this copy his trainer self is left out (Remove 38206) and the game's own Cyrus Drake creature (1475614, Myth, the Treasure Tower floor boss) stands in his place, spawned as Shadow School custom 1880004 (spiraldb/Customs/1880004.json: Myth, level 13, 1100 health, a ward-breaking Myth deck, no drops). A Duel Circle (560, CombatSigil8Actor, radius 700 as the Wizard City boss rooms use) sits 90 units from him at his own height (Z 100.0; the zone has no other ground data: its pathNodeData is empty and collision.bcd/zone.nav are not read here, so the platform extent is NOT TESTED in the client). Every way out of this copy, and a lost or fled battle, goes to Ravenwood outside the Myth School's door (the Ravenwood MythSchool Exit location), never back into this copy.",
+  "Objects": [
+    {
+      "Name": "ShadowSchool Myth Binding Circle",
+      "Notes": "The battle circle of the myth binding, beside the instructor's place, at the Z of the instructor's own placement.",
+      "TemplateID": 560,
+      "X": 897.46,
+      "Y": 13.78,
+      "Z": 100.0,
+      "Yaw": 3.1416,
+      "Scale": 1,
+      "CombatSigil": {
+        "SigilType": "CombatSigil8Actor",
+        "Radius": 700
+      }
+    }
+  ],
+  "Creatures": [
+    {
+      "Name": "ShadowSchool Bound Drake",
+      "Notes": "Cyrus Drake (1475614) where the trainer stands; ReplaceSpawns makes it custom 1880004.",
+      "TemplateID": 1475614,
+      "X": 807.46,
+      "Y": 13.78,
+      "Z": 100.0,
+      "Yaw": 1.52576
+    }
+  ],
+  "Remove": [
+    38206
+  ],
+  "ReplaceSpawns": {
+    "1475614": 1880004
+  },
+  "Exit": {
+    "Zone": "WizardCity/WC_Ravenwood",
+    "Loc": "-3281.591,3876.725,0.0001,-1.3973",
+    "Triggers": [],
+    "Doors": []
+  }
+}

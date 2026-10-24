@@ -1,0 +1,571 @@
+{
+  "m_questName": "ShadowSchool-Conquest",
+  "m_questNameID": 0,
+  "m_questTitle": "ShadowSchool_ConquestTitle",
+  "m_questInfo": "ShadowSchool_ConquestInfo",
+  "m_questPrep": null,
+  "m_questUnderway": null,
+  "m_questComplete": null,
+  "m_startGoals": [
+    "ShadowSchool-Conquest-Milestone-Falmea"
+  ],
+  "m_goals": [
+    {
+      "$type": "Imcodec.ObjectProperty.TypeCache.BountyGoalTemplate, Imcodec.ObjectProperty",
+      "m_goalName": "ShadowSchool-Conquest-Milestone-Falmea",
+      "m_goalNameID": 318371979,
+      "m_goalTitle": "ShadowSchool_ConquestMilestoneFalmea",
+      "m_goalUnderway": null,
+      "m_hyperlink": null,
+      "m_completeText": null,
+      "m_goalRequirements": null,
+      "m_tallyCounter": null,
+      "m_locationName": "ShadowSchool_ConquestFalmeaLocation",
+      "m_displayImage2": "",
+      "m_autoQualify": false,
+      "m_autoComplete": false,
+      "m_noQuestHelper": false,
+      "m_petOnlyQuest": false,
+      "m_hideGoalFloatyText": false,
+      "m_behaviors": null,
+      "m_completeResults": {
+        "m_results": []
+      },
+      "m_displayImage1": "",
+      "m_clientTags": [],
+      "m_genericEvents": [
+        "ShadowSchool_Conquest_Falmea_Defeated"
+      ],
+      "m_destinationZone": "WizardCity/Interiors/WC_SchoolFire",
+      "m_dialogList": {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ActorDialogList, Imcodec.ObjectProperty",
+        "m_dialogs": []
+      },
+      "m_goalType": "GOAL_TYPE_BOUNTY",
+      "m_activateResults": {
+        "m_results": []
+      },
+      "m_bountyTotal": 1,
+      "m_npcAdjectives": []
+    },
+    {
+      "$type": "Imcodec.ObjectProperty.TypeCache.BountyGoalTemplate, Imcodec.ObjectProperty",
+      "m_goalName": "ShadowSchool-Conquest-Milestone-Greyrose",
+      "m_goalNameID": 813441834,
+      "m_goalTitle": "ShadowSchool_ConquestMilestoneGreyrose",
+      "m_goalUnderway": null,
+      "m_hyperlink": null,
+      "m_completeText": null,
+      "m_goalRequirements": null,
+      "m_tallyCounter": null,
+      "m_locationName": "ShadowSchool_ConquestGreyroseLocation",
+      "m_displayImage2": "",
+      "m_autoQualify": false,
+      "m_autoComplete": false,
+      "m_noQuestHelper": false,
+      "m_petOnlyQuest": false,
+      "m_hideGoalFloatyText": false,
+      "m_behaviors": null,
+      "m_completeResults": {
+        "m_results": []
+      },
+      "m_displayImage1": "",
+      "m_clientTags": [],
+      "m_genericEvents": [
+        "ShadowSchool_Conquest_Greyrose_Defeated"
+      ],
+      "m_destinationZone": "WizardCity/Interiors/WC_SchoolFrost",
+      "m_dialogList": {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ActorDialogList, Imcodec.ObjectProperty",
+        "m_dialogs": []
+      },
+      "m_goalType": "GOAL_TYPE_BOUNTY",
+      "m_activateResults": {
+        "m_results": []
+      },
+      "m_bountyTotal": 1,
+      "m_npcAdjectives": []
+    },
+    {
+      "$type": "Imcodec.ObjectProperty.TypeCache.BountyGoalTemplate, Imcodec.ObjectProperty",
+      "m_goalName": "ShadowSchool-Conquest-Milestone-Balestrom",
+      "m_goalNameID": 1180846109,
+      "m_goalTitle": "ShadowSchool_ConquestMilestoneBalestrom",
+      "m_goalUnderway": null,
+      "m_hyperlink": null,
+      "m_completeText": null,
+      "m_goalRequirements": null,
+      "m_tallyCounter": null,
+      "m_locationName": "ShadowSchool_ConquestBalestromLocation",
+      "m_displayImage2": "",
+      "m_autoQualify": false,
+      "m_autoComplete": false,
+      "m_noQuestHelper": false,
+      "m_petOnlyQuest": false,
+      "m_hideGoalFloatyText": false,
+      "m_behaviors": null,
+      "m_completeResults": {
+        "m_results": []
+      },
+      "m_displayImage1": "",
+      "m_clientTags": [],
+      "m_genericEvents": [
+        "ShadowSchool_Conquest_Balestrom_Defeated"
+      ],
+      "m_destinationZone": "WizardCity/Interiors/WC_SchoolStorm",
+      "m_dialogList": {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ActorDialogList, Imcodec.ObjectProperty",
+        "m_dialogs": []
+      },
+      "m_goalType": "GOAL_TYPE_BOUNTY",
+      "m_activateResults": {
+        "m_results": []
+      },
+      "m_bountyTotal": 1,
+      "m_npcAdjectives": []
+    },
+    {
+      "$type": "Imcodec.ObjectProperty.TypeCache.BountyGoalTemplate, Imcodec.ObjectProperty",
+      "m_goalName": "ShadowSchool-Conquest-Milestone-Drake",
+      "m_goalNameID": 1862611223,
+      "m_goalTitle": "ShadowSchool_ConquestMilestoneDrake",
+      "m_goalUnderway": null,
+      "m_hyperlink": null,
+      "m_completeText": null,
+      "m_goalRequirements": null,
+      "m_tallyCounter": null,
+      "m_locationName": "ShadowSchool_ConquestDrakeLocation",
+      "m_displayImage2": "",
+      "m_autoQualify": false,
+      "m_autoComplete": false,
+      "m_noQuestHelper": false,
+      "m_petOnlyQuest": false,
+      "m_hideGoalFloatyText": false,
+      "m_behaviors": null,
+      "m_completeResults": {
+        "m_results": []
+      },
+      "m_displayImage1": "",
+      "m_clientTags": [],
+      "m_genericEvents": [
+        "ShadowSchool_Conquest_Drake_Defeated"
+      ],
+      "m_destinationZone": "WizardCity/Interiors/WC_SchoolMyth",
+      "m_dialogList": {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ActorDialogList, Imcodec.ObjectProperty",
+        "m_dialogs": []
+      },
+      "m_goalType": "GOAL_TYPE_BOUNTY",
+      "m_activateResults": {
+        "m_results": []
+      },
+      "m_bountyTotal": 1,
+      "m_npcAdjectives": []
+    },
+    {
+      "$type": "Imcodec.ObjectProperty.TypeCache.BountyGoalTemplate, Imcodec.ObjectProperty",
+      "m_goalName": "ShadowSchool-Conquest-Milestone-Wu",
+      "m_goalNameID": 1802614246,
+      "m_goalTitle": "ShadowSchool_ConquestMilestoneWu",
+      "m_goalUnderway": null,
+      "m_hyperlink": null,
+      "m_completeText": null,
+      "m_goalRequirements": null,
+      "m_tallyCounter": null,
+      "m_locationName": "ShadowSchool_ConquestWuLocation",
+      "m_displayImage2": "",
+      "m_autoQualify": false,
+      "m_autoComplete": false,
+      "m_noQuestHelper": false,
+      "m_petOnlyQuest": false,
+      "m_hideGoalFloatyText": false,
+      "m_behaviors": null,
+      "m_completeResults": {
+        "m_results": []
+      },
+      "m_displayImage1": "",
+      "m_clientTags": [],
+      "m_genericEvents": [
+        "ShadowSchool_Conquest_Wu_Defeated"
+      ],
+      "m_destinationZone": "WizardCity/Interiors/WC_SchoolLife",
+      "m_dialogList": {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ActorDialogList, Imcodec.ObjectProperty",
+        "m_dialogs": []
+      },
+      "m_goalType": "GOAL_TYPE_BOUNTY",
+      "m_activateResults": {
+        "m_results": []
+      },
+      "m_bountyTotal": 1,
+      "m_npcAdjectives": []
+    },
+    {
+      "$type": "Imcodec.ObjectProperty.TypeCache.BountyGoalTemplate, Imcodec.ObjectProperty",
+      "m_goalName": "ShadowSchool-Conquest-Milestone-Ashthorn",
+      "m_goalNameID": 1910151000,
+      "m_goalTitle": "ShadowSchool_ConquestMilestoneAshthorn",
+      "m_goalUnderway": null,
+      "m_hyperlink": null,
+      "m_completeText": null,
+      "m_goalRequirements": null,
+      "m_tallyCounter": null,
+      "m_locationName": "ShadowSchool_ConquestAshthornLocation",
+      "m_displayImage2": "",
+      "m_autoQualify": false,
+      "m_autoComplete": false,
+      "m_noQuestHelper": false,
+      "m_petOnlyQuest": false,
+      "m_hideGoalFloatyText": false,
+      "m_behaviors": null,
+      "m_completeResults": {
+        "m_results": []
+      },
+      "m_displayImage1": "",
+      "m_clientTags": [],
+      "m_genericEvents": [
+        "ShadowSchool_Conquest_Ashthorn_Defeated"
+      ],
+      "m_destinationZone": "WizardCity/WC_Ravenwood",
+      "m_dialogList": {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ActorDialogList, Imcodec.ObjectProperty",
+        "m_dialogs": []
+      },
+      "m_goalType": "GOAL_TYPE_BOUNTY",
+      "m_activateResults": {
+        "m_results": []
+      },
+      "m_bountyTotal": 1,
+      "m_npcAdjectives": []
+    },
+    {
+      "$type": "Imcodec.ObjectProperty.TypeCache.BountyGoalTemplate, Imcodec.ObjectProperty",
+      "m_goalName": "ShadowSchool-Conquest-Milestone-Wethersfield",
+      "m_goalNameID": 675024066,
+      "m_goalTitle": "ShadowSchool_ConquestMilestoneWethersfield",
+      "m_goalUnderway": null,
+      "m_hyperlink": null,
+      "m_completeText": null,
+      "m_goalRequirements": null,
+      "m_tallyCounter": null,
+      "m_locationName": "ShadowSchool_ConquestWethersfieldLocation",
+      "m_displayImage2": "",
+      "m_autoQualify": false,
+      "m_autoComplete": false,
+      "m_noQuestHelper": false,
+      "m_petOnlyQuest": false,
+      "m_hideGoalFloatyText": false,
+      "m_behaviors": null,
+      "m_completeResults": {
+        "m_results": []
+      },
+      "m_displayImage1": "",
+      "m_clientTags": [],
+      "m_genericEvents": [
+        "ShadowSchool_Conquest_Wethersfield_Defeated"
+      ],
+      "m_destinationZone": "WizardCity/WC_Ravenwood",
+      "m_dialogList": {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ActorDialogList, Imcodec.ObjectProperty",
+        "m_dialogs": []
+      },
+      "m_goalType": "GOAL_TYPE_BOUNTY",
+      "m_activateResults": {
+        "m_results": []
+      },
+      "m_bountyTotal": 1,
+      "m_npcAdjectives": []
+    }
+  ],
+  "m_startResults": {
+    "m_results": []
+  },
+  "m_endResults": {
+    "m_results": []
+  },
+  "m_requirements": {
+    "$type": "Imcodec.ObjectProperty.TypeCache.RequirementList, Imcodec.ObjectProperty",
+    "m_requirements": [
+      {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ReqHasEntry, Imcodec.ObjectProperty",
+        "m_entryName": "Complete",
+        "m_displayName": null,
+        "m_isQuestRegistry": true,
+        "m_questName": "WC-COMMONS-MAIN-004",
+        "m_applyNOT": false,
+        "m_operator": "ROP_AND"
+      },
+      {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ReqHasEntry, Imcodec.ObjectProperty",
+        "m_entryName": "Complete",
+        "m_displayName": null,
+        "m_isQuestRegistry": true,
+        "m_questName": "ShadowSchool-UmbralSight-Lesson",
+        "m_applyNOT": false,
+        "m_operator": "ROP_AND"
+      },
+      {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ReqHasEntry, Imcodec.ObjectProperty",
+        "m_entryName": "ShadowSchool_UmbralSight",
+        "m_displayName": null,
+        "m_isQuestRegistry": false,
+        "m_questName": "",
+        "m_applyNOT": false,
+        "m_operator": "ROP_AND"
+      },
+      {
+        "$type": "Imcodec.ObjectProperty.TypeCache.ReqIsSchool, Imcodec.ObjectProperty",
+        "m_magicSchoolName": "Shadow",
+        "m_applyNOT": false,
+        "m_operator": "ROP_AND"
+      }
+    ],
+    "m_applyNOT": false,
+    "m_operator": "ROP_AND"
+  },
+  "m_prepRequirements": null,
+  "m_pruneRequirements": null,
+  "m_prepAlways": false,
+  "m_clientTags": null,
+  "m_goalLogic": [
+    {
+      "m_goalsAND": [
+        "ShadowSchool-Conquest-Milestone-Falmea"
+      ],
+      "m_goalsOR": [],
+      "m_goalsToAdd": [
+        "ShadowSchool-Conquest-Milestone-Greyrose"
+      ],
+      "m_completeQuest": false,
+      "m_requiredORCount": 1
+    },
+    {
+      "m_goalsAND": [
+        "ShadowSchool-Conquest-Milestone-Greyrose"
+      ],
+      "m_goalsOR": [],
+      "m_goalsToAdd": [
+        "ShadowSchool-Conquest-Milestone-Balestrom"
+      ],
+      "m_completeQuest": false,
+      "m_requiredORCount": 1
+    },
+    {
+      "m_goalsAND": [
+        "ShadowSchool-Conquest-Milestone-Balestrom"
+      ],
+      "m_goalsOR": [],
+      "m_goalsToAdd": [
+        "ShadowSchool-Conquest-Milestone-Drake"
+      ],
+      "m_completeQuest": false,
+      "m_requiredORCount": 1
+    },
+    {
+      "m_goalsAND": [
+        "ShadowSchool-Conquest-Milestone-Drake"
+      ],
+      "m_goalsOR": [],
+      "m_goalsToAdd": [
+        "ShadowSchool-Conquest-Milestone-Wu"
+      ],
+      "m_completeQuest": false,
+      "m_requiredORCount": 1
+    },
+    {
+      "m_goalsAND": [
+        "ShadowSchool-Conquest-Milestone-Wu"
+      ],
+      "m_goalsOR": [],
+      "m_goalsToAdd": [
+        "ShadowSchool-Conquest-Milestone-Ashthorn"
+      ],
+      "m_completeQuest": false,
+      "m_requiredORCount": 1
+    },
+    {
+      "m_goalsAND": [
+        "ShadowSchool-Conquest-Milestone-Ashthorn"
+      ],
+      "m_goalsOR": [],
+      "m_goalsToAdd": [
+        "ShadowSchool-Conquest-Milestone-Wethersfield"
+      ],
+      "m_completeQuest": false,
+      "m_requiredORCount": 1
+    },
+    {
+      "m_goalsAND": [
+        "ShadowSchool-Conquest-Milestone-Wethersfield"
+      ],
+      "m_goalsOR": [],
+      "m_goalsToAdd": [],
+      "m_completeQuest": true,
+      "m_requiredORCount": 1
+    }
+  ],
+  "m_questLevel": 10,
+  "m_questRepeat": 0,
+  "m_onStartQuestScript": "",
+  "m_onEndQuestScript": "",
+  "m_dialogList": {
+    "$type": "Imcodec.ObjectProperty.TypeCache.ActorDialogList, Imcodec.ObjectProperty",
+    "m_dialogs": [
+      {
+        "m_dialogTag": "Prep",
+        "m_dialogEntries": [
+          {
+            "$type": "Imcodec.ObjectProperty.TypeCache.NPCDialogEntry, Imcodec.ObjectProperty",
+            "m_personaName": "ShadowSchool-Tutor_Persona",
+            "m_nameOverride": "",
+            "m_nameSTKey": "NPCFormats_First_Last",
+            "m_guiDisplay": "",
+            "m_maxTimeSeconds": -1,
+            "m_invisible": false,
+            "m_requirements": null,
+            "m_dialog": "ShadowSchool_ConquestOffer",
+            "m_picture": "GUI/NpcPortraits/Portrait_VampireHunterF_A_NPC.dds",
+            "m_soundFile": "",
+            "m_action": "",
+            "m_dialogEvent": "",
+            "m_actorTemplateID": 1880000100,
+            "m_cameraName": "LOCATION",
+            "m_interpolationDuration": 2.0,
+            "m_cameraOffsetX": -186.0637,
+            "m_cameraOffsetY": 328.3062,
+            "m_cameraOffsetZ": 173.8458,
+            "m_pitch": 0.3300002,
+            "m_yaw": -2.500001,
+            "m_roll": 0.0,
+            "m_cameraShakeType": "",
+            "m_cameraShakeDuration": 0.0,
+            "m_cameraShakeAmplitude": 0.0,
+            "m_bypassCameraOnReview": true,
+            "m_cameraZoneName": "WizardCity/Interiors/WC_LibraryBookStacks",
+            "m_duration": 0.0,
+            "m_delay": 0.0,
+            "m_cameraHidePlayers": 2,
+            "m_walkAwayNpcTemplateID": 0,
+            "m_walkAwayExitDirectionInDegrees": 0.0,
+            "m_walkAwayFadeTime": 0.0,
+            "m_walkAwayUseCurrentFacing": false,
+            "m_standInPlayerTag": "",
+            "m_fadeOutCamera": false,
+            "m_snapCameraToPlayerAtExit": false,
+            "m_secondaryCameraName": "",
+            "m_secondaryInterpolationDuration": 0.0,
+            "m_npcStandInList": [],
+            "m_dialogAnimationList": [],
+            "m_dialogTurningList": [],
+            "m_npcYawOffsetInDegrees": 0.0,
+            "m_allowPlayerToMove": false,
+            "m_soundEffectFile": "",
+            "m_musicFile": "",
+            "m_nonStackableMusic": false,
+            "m_nonRepeatableMusic": false,
+            "m_playMusicAtSFXVolume": false,
+            "m_soundEffectDelay": 0.0,
+            "m_musicDelay": 0.0,
+            "m_musicFadeTime": 3.0,
+            "m_dontReleaseCameraAtExit": false,
+            "m_disableBackButton": false,
+            "m_enableExitButton": false,
+            "m_cameraFadeType": "",
+            "m_cameraFadeTime": 0.5,
+            "m_idleAnimation": "",
+            "m_spamTime": 1.0,
+            "m_playSoundIfSpamming": true,
+            "m_playMusicIfSpamming": true,
+            "m_stopMusicFadeTime": 0.0,
+            "m_restartMusicFadeTime": 0.0,
+            "m_meetsRequirements": true,
+            "m_secondaryCameraInitalDelay": 0.0,
+            "m_displayButtonsOnTimedDialog": false
+          },
+          {
+            "$type": "Imcodec.ObjectProperty.TypeCache.NPCDialogEntry, Imcodec.ObjectProperty",
+            "m_personaName": "ShadowSchool-Tutor_Persona",
+            "m_nameOverride": "",
+            "m_nameSTKey": "NPCFormats_First_Last",
+            "m_guiDisplay": "",
+            "m_maxTimeSeconds": -1,
+            "m_invisible": false,
+            "m_requirements": null,
+            "m_dialog": "ShadowSchool_ConquestTerms",
+            "m_picture": "GUI/NpcPortraits/Portrait_VampireHunterF_A_NPC.dds",
+            "m_soundFile": "",
+            "m_action": "",
+            "m_dialogEvent": "",
+            "m_actorTemplateID": 1880000100,
+            "m_cameraName": "LOCATION",
+            "m_interpolationDuration": 2.0,
+            "m_cameraOffsetX": -186.0637,
+            "m_cameraOffsetY": 328.3062,
+            "m_cameraOffsetZ": 173.8458,
+            "m_pitch": 0.3300002,
+            "m_yaw": -2.500001,
+            "m_roll": 0.0,
+            "m_cameraShakeType": "",
+            "m_cameraShakeDuration": 0.0,
+            "m_cameraShakeAmplitude": 0.0,
+            "m_bypassCameraOnReview": true,
+            "m_cameraZoneName": "WizardCity/Interiors/WC_LibraryBookStacks",
+            "m_duration": 0.0,
+            "m_delay": 0.0,
+            "m_cameraHidePlayers": 2,
+            "m_walkAwayNpcTemplateID": 0,
+            "m_walkAwayExitDirectionInDegrees": 0.0,
+            "m_walkAwayFadeTime": 0.0,
+            "m_walkAwayUseCurrentFacing": false,
+            "m_standInPlayerTag": "",
+            "m_fadeOutCamera": false,
+            "m_snapCameraToPlayerAtExit": false,
+            "m_secondaryCameraName": "",
+            "m_secondaryInterpolationDuration": 0.0,
+            "m_npcStandInList": [],
+            "m_dialogAnimationList": [],
+            "m_dialogTurningList": [],
+            "m_npcYawOffsetInDegrees": 0.0,
+            "m_allowPlayerToMove": false,
+            "m_soundEffectFile": "",
+            "m_musicFile": "",
+            "m_nonStackableMusic": false,
+            "m_nonRepeatableMusic": false,
+            "m_playMusicAtSFXVolume": false,
+            "m_soundEffectDelay": 0.0,
+            "m_musicDelay": 0.0,
+            "m_musicFadeTime": 3.0,
+            "m_dontReleaseCameraAtExit": false,
+            "m_disableBackButton": false,
+            "m_enableExitButton": false,
+            "m_cameraFadeType": "",
+            "m_cameraFadeTime": 0.5,
+            "m_idleAnimation": "",
+            "m_spamTime": 1.0,
+            "m_playSoundIfSpamming": true,
+            "m_playMusicIfSpamming": true,
+            "m_stopMusicFadeTime": 0.0,
+            "m_restartMusicFadeTime": 0.0,
+            "m_meetsRequirements": true,
+            "m_secondaryCameraInitalDelay": 0.0,
+            "m_displayButtonsOnTimedDialog": false
+          }
+        ]
+      }
+    ]
+  },
+  "m_missionDoors": null,
+  "m_dynaMods": null,
+  "m_isHidden": false,
+  "m_outdated": false,
+  "m_noQuestHelper": false,
+  "m_mainline": false,
+  "m_defaultDialogAnimation": null,
+  "m_skipQHAutoSelect": false,
+  "m_questEffectInfoList": null,
+  "m_forceInteraction": false,
+  "m_checkInventoryForCrafting": false,
+  "m_playAsYourPetNPC": false,
+  "m_activityType": "ACTIVITY_NotActivity",
+  "m_behaviors": null
+}

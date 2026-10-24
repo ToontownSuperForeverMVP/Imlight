@@ -24,6 +24,7 @@ using Imcodec.ObjectProperty.TypeCache;
 using Imlight.Common;
 using Imlight.CoreLib.Game.DropTables;
 using Imlight.CoreLib.Game.Madlibs;
+using Imlight.CoreLib.Game.Quests;
 using Imlight.CoreLib.Shared.Packets;
 using Imlight.CoreLib.WizardData.Collections;
 using Imlight.CoreLib.WizardData.Models.Player;
@@ -54,9 +55,9 @@ internal class CommandQuest : CommandProtocol {
             return;
         }
 
-        ShowQuestInfoDialog(quest);
+        ShowQuestInfoDialog(quest, wizard);
         SendQuestOfferDialog(quest);
-        SendQuestOfferCacheOption(quest);
+        SendQuestOfferCacheOption(QuestDialogueResolver.ResolveTemplate(wizard, quest));
     }
 
     [Command("list")]
@@ -89,6 +90,7 @@ internal class CommandQuest : CommandProtocol {
     private void QuestCompleteCommand([Remainder] string questName)
         => SendQuestAction("complete", questName);
 
+
     [Command("grant")]
     [AuthRequired(AuthLevel.QualityAssurance)]
     private void QuestGrantCommand([Remainder] string questName)
@@ -110,7 +112,7 @@ internal class CommandQuest : CommandProtocol {
             QuestName = questName,
         });
 
-    private void ShowQuestInfoDialog(QuestTemplate quest) {
+    private void ShowQuestInfoDialog(QuestTemplate quest, Wizard wizard) {
         var dialogList = quest.m_dialogList as ActorDialogList;
         var prepDialogList = dialogList?.m_dialogs.FirstOrDefault(de => de.m_dialogTag == "Prep");
 
@@ -118,7 +120,7 @@ internal class CommandQuest : CommandProtocol {
             return;
         }
 
-        SendActorDialog(prepDialogList, "QuestInfo");
+        SendActorDialog(QuestDialogueResolver.Resolve(wizard, quest, null, prepDialogList), "QuestInfo");
     }
 
     private void SendQuestOfferDialog(QuestTemplate quest) {

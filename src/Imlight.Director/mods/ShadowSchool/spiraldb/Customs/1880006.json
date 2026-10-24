@@ -1,0 +1,144 @@
+{
+  "CustomID": 1880006,
+  "BaseTemplateID": 1475616,
+  "Name": "Malorn Ashthorn",
+  "Notes": "Shadow School, Stage D2.3: Malorn Ashthorn inside the death binding (ConquestEncounters.cs, encounter Ashthorn). The game has no creature of his own, so the Treasure Tower's Death floor boss (1475616, Dworgyn) is the base and the custom names it for him: Death, level 15, 1200 health, no resist, pierce, critical, block, power pips or starting pips. Modest by design (plan 7.3): Death Troll 97383765 (rank 2, 160-200) and Banshee 827805677 (rank 3, 245-305) unlimited, Poison 1730630192 (35 then 435 over three rounds) twice, Skeletal Pirate 732623153 (rank 5, 430-510), Feint 90582150 and Plague 1888318032 once each, all 85% accurate. DRAIN WAS CHECKED AND DOES NOT WORK THROUGH HIS DECK: SpellEffectFilter.IsDamageEffect, which the creature AI uses to choose its attacks, does not count kStealHealth, so a Vampire, Wraith or Ghoul in a deck is never cast by the AI (and a deck of drains only would pass every round). The drain is therefore scripted with the engine's own BossCheats, which cast the real spell free through HandleSuccessfulAction: CombatEffectApplicator.ApplyStealHealthEffect deals the damage and heals the caster by damage x healModifier (0.5 for Vampire and Wraith). Vampire in rounds 2, 5, 8, 11 (four casts at most, roughly 150 healed each if it lands in full), Wraith once under 40% health, an opening Curse, and a pip stolen from a wizard who casts a card costing 4 or more (three times at most). From round 9 a growing damage boost bounds the fight. A win gives no extra experience or gold (the quest is the reward and it is given once).",
+  "Health": 1200,
+  "Level": 15,
+  "School": "Death",
+  "DamageBySchool": {
+    "All": 0
+  },
+  "ResistBySchool": {
+    "All": 0
+  },
+  "IncomingBoostBySchool": {
+    "All": 0
+  },
+  "PierceBySchool": {
+    "All": 0
+  },
+  "CriticalBySchool": {
+    "All": 0
+  },
+  "BlockBySchool": {
+    "All": 0
+  },
+  "FlatDamage": 0,
+  "PowerPipChance": 0,
+  "StartingPips": 0,
+  "StartingPowerPips": 0,
+  "ShadowPips": 0,
+  "Deck": [
+    {
+      "SpellID": 97383765,
+      "Name": "Death Troll",
+      "Copies": 0
+    },
+    {
+      "SpellID": 827805677,
+      "Name": "Banshee",
+      "Copies": 0
+    },
+    {
+      "SpellID": 1730630192,
+      "Name": "Poison",
+      "Copies": 2
+    },
+    {
+      "SpellID": 732623153,
+      "Name": "Skeletal Pirate",
+      "Copies": 1
+    },
+    {
+      "SpellID": 90582150,
+      "Name": "Feint",
+      "Copies": 1
+    },
+    {
+      "SpellID": 1888318032,
+      "Name": "Plague",
+      "Copies": 1
+    }
+  ],
+  "Cheats": {
+    "Changed": {},
+    "Added": [
+      {
+        "When": "BattleStart",
+        "Target": "FirstEnemy",
+        "Casts": [
+          {
+            "SpellID": 75022979,
+            "Spell": "Curse",
+            "Target": "FirstEnemy"
+          }
+        ],
+        "Notes": "He opens with a curse (kModifyIncomingDamage +30% on the wizard): the next hit on the wizard is heavier."
+      },
+      {
+        "When": "RoundStart",
+        "Round": 2,
+        "Every": 3,
+        "MaxTimes": 4,
+        "Target": "FirstEnemy",
+        "Casts": [
+          {
+            "SpellID": 524731385,
+            "Spell": "Vampire",
+            "Target": "FirstEnemy"
+          }
+        ],
+        "Notes": "His drain: Vampire (kStealHealth 335, healModifier 0.5: he heals half of what it deals) in rounds 2, 5, 8, 11, at most four times."
+      },
+      {
+        "When": "HealthBelow",
+        "Percent": 40,
+        "MaxTimes": 1,
+        "Target": "FirstEnemy",
+        "Casts": [
+          {
+            "SpellID": 1788506505,
+            "Spell": "Wraith",
+            "Target": "FirstEnemy"
+          }
+        ],
+        "Notes": "A last drain, once, under 40% health: Wraith (kStealHealth 500, healModifier 0.5)."
+      },
+      {
+        "When": "PlayerCasts",
+        "CostMin": 4,
+        "MaxTimes": 3,
+        "Cooldown": 1,
+        "Target": "Caster",
+        "Actions": [
+          {
+            "Do": "StealPips",
+            "Amount": 1,
+            "Kind": "Normal",
+            "Target": "Caster"
+          }
+        ],
+        "Notes": "Resource pressure: a wizard who casts a card costing 4 or more pips loses a pip to him, up to three times."
+      },
+      {
+        "When": "FromRound",
+        "Round": 9,
+        "Every": 2,
+        "Target": "Self",
+        "Actions": [
+          {
+            "Do": "Boost",
+            "Kind": "Damage",
+            "Amount": 10
+          }
+        ],
+        "Notes": "From round 9 the binding strains: +10% damage every second round, stacking."
+      }
+    ]
+  },
+  "Drops": [],
+  "XP": 0,
+  "GoldMin": 0,
+  "GoldMax": 0
+}

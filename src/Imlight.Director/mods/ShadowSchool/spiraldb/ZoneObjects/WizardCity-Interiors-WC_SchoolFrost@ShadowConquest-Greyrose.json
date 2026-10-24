@@ -1,0 +1,44 @@
+{
+  "Zone": "WizardCity/Interiors/WC_SchoolFrost",
+  "Variant": "ShadowConquest-Greyrose",
+  "Notes": "Shadow School, Stage D2 (ConquestEncounters.cs): the private copy of the Frost School that Greyrose's binding opens for one Shadow wizard on the quest ShadowSchool-Conquest-Greyrose. Only a copy loaded with this variant uses this file; the public Frost School is untouched. From the zone's own gamedata.bin (read on the live server, 2026-10-23): Lydia Greyrose (WC-RAV-NPC03, template 38172, the Ice trainer) stands at (761.52, 20.66, 147.81), facing 1.543659; players arrive at Start (-131.28, 1.16, 0.5). In this copy her trainer self is left out (Remove 38172) and the game's own Lydia Greyrose creature (1475612, Ice, the Treasure Tower floor boss) stands in her place, spawned as Shadow School custom 1880002 (spiraldb/Customs/1880002.json: Ice, level 11, 1000 health, a defensive Ice deck, no drops). A Duel Circle (560, CombatSigil8Actor, as the Wizard City boss rooms use) is on her platform. Every way out of this copy, and a lost or fled battle, goes to Ravenwood outside the Ice School's door (the Ravenwood IceSchool Exit location), never back into this copy.",
+  "Objects": [
+    {
+      "Name": "ShadowSchool Frost Binding Circle",
+      "Notes": "The battle circle of the frost binding, on Greyrose's platform (Z 147.81 there).",
+      "TemplateID": 560,
+      "X": 850,
+      "Y": 20.66,
+      "Z": 147.81,
+      "Yaw": 3.1416,
+      "Scale": 1,
+      "CombatSigil": {
+        "SigilType": "CombatSigil8Actor",
+        "Radius": 700
+      }
+    }
+  ],
+  "Creatures": [
+    {
+      "Name": "ShadowSchool Bound Greyrose",
+      "Notes": "Lydia Greyrose (1475612) where the trainer stands; ReplaceSpawns makes it custom 1880002.",
+      "TemplateID": 1475612,
+      "X": 761.52,
+      "Y": 20.66,
+      "Z": 147.81,
+      "Yaw": 1.543659
+    }
+  ],
+  "Remove": [
+    38172
+  ],
+  "ReplaceSpawns": {
+    "1475612": 1880002
+  },
+  "Exit": {
+    "Zone": "WizardCity/WC_Ravenwood",
+    "Loc": "3416.191,3605.734,0.0001,1.3566",
+    "Triggers": [],
+    "Doors": []
+  }
+}

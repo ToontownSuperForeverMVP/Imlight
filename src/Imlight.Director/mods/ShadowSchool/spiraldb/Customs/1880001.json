@@ -1,0 +1,59 @@
+{
+  "CustomID": 1880001,
+  "BaseTemplateID": 403089,
+  "Name": "",
+  "Notes": "Shadow School, Stage D1: Dalia Falmea inside the hearth binding (ConquestEncounters.cs, encounter Falmea). The base is the game's own Wizard City Falmea combat template (DaliaFalmea-WCBoss-R7: Falmea's model, boss, level 7, 4000 health, no base effects), whose deck is Cyrus Drake's Myth set; here she is a Fire instructor held back by the binding: Fire, level 10, 950 health, no pierce, critical, block or power pips, starting with no pips. Her deck is Fire damage over time and tempo (verified spell templates): Fire Cat 103007158, Fire Elf 1243857701 (damage over time), Sunbird 1599065470 (twice a battle), Fire Trap 400321766 and Fireblade 603748810 (twice each). A win gives no extra experience or gold (the quest is the reward and it is given once).",
+  "Health": 950,
+  "Level": 10,
+  "School": "Fire",
+  "DamageBySchool": {
+    "All": 0
+  },
+  "ResistBySchool": {
+    "All": 0
+  },
+  "PierceBySchool": {
+    "All": 0
+  },
+  "CriticalBySchool": {
+    "All": 0
+  },
+  "BlockBySchool": {
+    "All": 0
+  },
+  "PowerPipChance": 0,
+  "StartingPips": 0,
+  "StartingPowerPips": 0,
+  "ShadowPips": 0,
+  "Deck": [
+    {
+      "SpellID": 103007158,
+      "Name": "Fire Cat",
+      "Copies": 0
+    },
+    {
+      "SpellID": 1243857701,
+      "Name": "Fire Elf",
+      "Copies": 0
+    },
+    {
+      "SpellID": 1599065470,
+      "Name": "Sunbird",
+      "Copies": 2
+    },
+    {
+      "SpellID": 400321766,
+      "Name": "Fire Trap",
+      "Copies": 2
+    },
+    {
+      "SpellID": 603748810,
+      "Name": "Fireblade",
+      "Copies": 2
+    }
+  ],
+  "Drops": [],
+  "XP": 0,
+  "GoldMin": 0,
+  "GoldMax": 0
+}

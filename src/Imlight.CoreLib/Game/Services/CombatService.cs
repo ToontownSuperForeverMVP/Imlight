@@ -226,11 +226,12 @@ internal class CombatService(SessionActor sessionActor) : MessageService(session
             // A boss of the Bosses tab (BossOverrides) can name its own Drops too.
             var templateId = Imlight.CoreLib.Game.Combat.Customs.BaseOf(key);
             var changes = Imlight.CoreLib.Game.Combat.BossOverrides.For(key);
-            var customDrops = changes?.Drops;
-            var loot = customDrops is { Count: > 0 }
-                ? DropTableRoller.Roll([.. customDrops], playerRef, playerObj, wizard)
-                : NpcDropTableCollection.TryGetDropTable(templateId, out var npcDropTable)
-                ? DropTableRoller.Roll(npcDropTable.DropTableNames.ToArray(), playerRef, playerObj, wizard)
+            var creatureDropTables = NpcDropTableCollection.TryGetDropTable(templateId, out var npcDropTable)
+                ? npcDropTable.DropTableNames.ToArray()
+                : [];
+            var dropTables = Imlight.CoreLib.Game.Combat.BossOverrides.DropTablesFor(changes, creatureDropTables);
+            var loot = dropTables.Count > 0
+                ? DropTableRoller.Roll([.. dropTables], playerRef, playerObj, wizard)
                 : new Imlight.CoreLib.WizardData.Models.World.DropTableResult();
 
             // Every defeated monster drops some gold, more for higher levels and bosses.
@@ -450,6 +451,7 @@ internal class CombatService(SessionActor sessionActor) : MessageService(session
             ShadowPactTarget = message.ShadowPactTarget, // -1 (If not used(?))
             SelectedTieredSpellID = message.SelectedTieredSpellID
         };
+
 
         _currentDuelActor.Tell(msg);
     }

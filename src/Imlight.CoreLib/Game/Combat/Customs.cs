@@ -7,7 +7,7 @@
  * Bosses tab's format (BossOverrides.cs: Health, the school grid, Deck, Cheats and the rest), and:
  *   CustomID        its number (1, 2, 3...), the file's name; .joinme Malistaire the Undying 1 brings it in.
  *   Name            the name it shows in battle (empty: the creature's own).
- *   Drops           drop table names (DropTables) it drops; left out or empty: the creature's own drops.
+ *   Drops           drop table names (DropTables) it drops; left out: the creature's drops, empty: no drops.
  *   Forms           a creature it turns into (a polymorph such as Haunted Malistaire 1336037) to the custom that form
  *                   is then: { "1336037": 2 }. A form not named is the game's creature.
  * It starts from the game's creature, not from the creature's own Bosses tab changes, and its changes count only for
@@ -18,6 +18,10 @@
  * A creature spawned as a custom is marked by its global id (Mark); everything that reads the changes of a creature
  * uses KeyOf, which is the template id for any other creature, and a key of the custom's own (Key) for one, so the
  * files of the two never mix. A saved file counts from the next battle or spawn, without a restart.
+ *
+ * An enabled mod (Mods/ModRegistry.cs) can ship customs of its own in <mod>/spiraldb/Customs/<custom id>.json, numbered
+ * in a range of its own (Shadow School: 1880001 and up) so they never meet the Customs tab's. A mod's file for a number
+ * wins over spiraldb-extra's, so the mod's battles stay as it made them; the Customs tab does not list them.
  */
 
 using System;
@@ -58,7 +62,16 @@ internal static class Customs {
 
     internal static int IdOf(ulong key) => IsCustom(key) ? (int) (key & uint.MaxValue) : 0;
 
-    internal static string FileOf(int customId) => Path.Combine(SpiralDB.ExtraPath, FOLDER, $"{customId}.json");
+    internal static string FileOf(int customId) {
+        foreach (var mod in Imlight.CoreLib.Mods.ModRegistry.SpiralDbFolders) {
+            var file = Path.Combine(mod, FOLDER, $"{customId}.json");
+            if (File.Exists(file)) {
+                return file;
+            }
+        }
+
+        return Path.Combine(SpiralDB.ExtraPath, FOLDER, $"{customId}.json");
+    }
 
     /// <summary>A custom's file as last read, or null when there is no such custom.</summary>
     internal static BossOverrides.BossOverride Get(int customId)

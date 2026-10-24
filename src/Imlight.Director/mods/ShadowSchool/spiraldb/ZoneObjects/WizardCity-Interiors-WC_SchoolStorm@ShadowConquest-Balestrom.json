@@ -1,0 +1,44 @@
+{
+  "Zone": "WizardCity/Interiors/WC_SchoolStorm",
+  "Variant": "ShadowConquest-Balestrom",
+  "Notes": "Shadow School, Stage D2.2 (ConquestEncounters.cs): the private copy of the Storm School that Balestrom's binding opens for one Shadow wizard on the quest ShadowSchool-Conquest-Balestrom. Only a copy loaded with this variant uses this file; the public Storm School is untouched. From the zone's own gamedata.bin (read on a QA server, 2026-10-23): Halston Balestrom (WC-RAV-NPC05, template 38141, the Storm trainer) stands at (938.90, -1.20, 202.09), orientation 1.531813; players arrive at Start (-85.74, 6.13, 0.50). In this copy his trainer self is left out (Remove 38141) and the game's own Halston Balestrom creature (1475613, Storm, the Treasure Tower floor boss) stands in his place, spawned as Shadow School custom 1880003 (spiraldb/Customs/1880003.json: Storm, level 12, 900 health, a high-damage low-accuracy Storm deck, no drops). A Duel Circle (560, CombatSigil8Actor, radius 700 as the Wizard City boss rooms use) sits 90 units from him at his own height (Z 202.09; the zone has no other ground data: its pathNodeData is empty and collision.bcd/zone.nav are not read here, so the platform extent is NOT TESTED in the client). Every way out of this copy, and a lost or fled battle, goes to Ravenwood outside the Storm School's door (the Ravenwood StormSchool Exit location), never back into this copy.",
+  "Objects": [
+    {
+      "Name": "ShadowSchool Storm Binding Circle",
+      "Notes": "The battle circle of the storm binding, beside the instructor's place, at the Z of the instructor's own placement.",
+      "TemplateID": 560,
+      "X": 1029,
+      "Y": -1.2,
+      "Z": 202.09,
+      "Yaw": 3.1416,
+      "Scale": 1,
+      "CombatSigil": {
+        "SigilType": "CombatSigil8Actor",
+        "Radius": 700
+      }
+    }
+  ],
+  "Creatures": [
+    {
+      "Name": "ShadowSchool Bound Balestrom",
+      "Notes": "Halston Balestrom (1475613) where the trainer stands; ReplaceSpawns makes it custom 1880003.",
+      "TemplateID": 1475613,
+      "X": 938.9,
+      "Y": -1.2,
+      "Z": 202.09,
+      "Yaw": 1.531813
+    }
+  ],
+  "Remove": [
+    38141
+  ],
+  "ReplaceSpawns": {
+    "1475613": 1880003
+  },
+  "Exit": {
+    "Zone": "WizardCity/WC_Ravenwood",
+    "Loc": "2752.043,818.4474,0.0001,2.3025",
+    "Triggers": [],
+    "Doors": []
+  }
+}

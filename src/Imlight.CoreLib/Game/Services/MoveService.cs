@@ -68,6 +68,8 @@ internal class MoveService : MessageService {
     private Wizard _wizard;
     private DateTime _lastMoveTime;
     private bool _sentStopMoveState;
+    // When the wizard last moved or arrived, for mods that react to a wizard standing still (PlayerPresenceEvents).
+    private DateTime _stillSince = DateTime.Now;
 
     public MoveService(SessionActor sessionActor) : base(sessionActor) {
         // Instead of fishing for zone interactions per move, we'll start an interval of x milliseconds
@@ -82,6 +84,7 @@ internal class MoveService : MessageService {
 
     protected override void OnPreDispose() {
         Timers.Cancel(InteractionTimerKey);
+        PlayerPresenceEvents.Detached(_wizard?.CharId ?? 0);
 
         base.OnPreDispose();
     }
@@ -106,6 +109,11 @@ internal class MoveService : MessageService {
         };
 
         SendToSocket(rsp);
+
+        // The attached wizard is the one moving from now on (a session can return to character select and pick another).
+        _wizard = wizard;
+        _stillSince = DateTime.Now;
+        PlayerPresenceEvents.Attached(SessionActor.ActorRef, wizard);
     }
 
     [MessageHandler(typeof(GAME_5_PROTOCOL.MSG_CLIENTMOVE))]
@@ -126,6 +134,10 @@ internal class MoveService : MessageService {
         // The trainer hall door sends a wizard on when they walk up to it. Locations arrive divided by 4.
         TrainerHallDoor.OnMove(SessionActor.ActorRef, _wizard, unchecked((short) message.LocationX * 4),
             unchecked((short) message.LocationY * 4), unchecked((short) message.LocationZ * 4));
+
+        _stillSince = DateTime.Now;
+        PlayerPresenceEvents.Moved(SessionActor.ActorRef, _wizard, unchecked((short) message.LocationX * 4),
+            unchecked((short) message.LocationY * 4), unchecked((short) message.LocationZ * 4));
     }
 
     [MessageHandler(typeof(ZONE_102_PROTOCOL.MSG_PLAYERMOVEINTERVAL))]
@@ -136,6 +148,9 @@ internal class MoveService : MessageService {
 
         // Fish for interactions within the zone.
         SendZoneInteractionFishRequest();
+
+        _wizard ??= GetActiveWizard();
+        PlayerPresenceEvents.Still(SessionActor.ActorRef, _wizard, DateTime.Now - _stillSince);
 
         // While we're here, we're going to check to see if the player has been idle for
         // too long. In such a case, we'll send a move state message to the client.

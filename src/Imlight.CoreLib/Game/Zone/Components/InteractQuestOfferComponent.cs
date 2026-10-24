@@ -47,6 +47,7 @@ using Imcodec.Types;
 using Imlight.Common;
 using Imlight.CoreLib.Game.DropTables;
 using Imlight.CoreLib.Game.Madlibs;
+using Imlight.CoreLib.Game.Quests;
 using Imlight.CoreLib.Game.Requirements;
 using Imlight.CoreLib.Game.Requirements.Contexts;
 using Imlight.CoreLib.Game.Services;
@@ -242,12 +243,12 @@ internal sealed class InteractQuestOfferComponent(ZoneEntity entity)
 
     private void HandleQuestOffer(IActorRef playerActor, QuestTemplate quest, Wizard playerCharacter) {
         SendInteractAvailableQuest(playerActor, quest);
-        ShowQuestInfoDialog(playerActor, quest);
+        ShowQuestInfoDialog(playerActor, quest, playerCharacter);
         SendQuestOfferDialog(playerActor, quest, playerCharacter);
-        SendQuestOfferCacheOption(playerActor, quest);
+        SendQuestOfferCacheOption(playerActor, QuestDialogueResolver.ResolveTemplate(playerCharacter, quest));
     }
 
-    private void ShowQuestInfoDialog(IActorRef playerActor, QuestTemplate quest) {
+    private void ShowQuestInfoDialog(IActorRef playerActor, QuestTemplate quest, Wizard playerCharacter) {
         var dialogList = quest.m_dialogList as ActorDialogList;
         var prepDialogList = dialogList?.m_dialogs.FirstOrDefault(de => de.m_dialogTag == "Prep");
 
@@ -258,7 +259,7 @@ internal sealed class InteractQuestOfferComponent(ZoneEntity entity)
             return;
         }
 
-        SendActorDialog(playerActor, prepDialogList, "QuestInfo");
+        SendActorDialog(playerActor, QuestDialogueResolver.Resolve(playerCharacter, quest, null, prepDialogList), "QuestInfo");
     }
 
     private void SendActorDialog(IActorRef playerActor, ActorDialog dialogEntry, string completionType, ulong questId = 0, ulong goalId = 0) {

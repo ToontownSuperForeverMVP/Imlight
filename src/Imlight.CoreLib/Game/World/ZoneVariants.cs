@@ -60,6 +60,13 @@ internal static class ZoneVariants {
         }
     }
 
+    /// <summary>The zone and variant noted for a character, or null; it forgets nothing.</summary>
+    internal static Entry Of(ulong charId) {
+        lock (s_lock) {
+            return Load().TryGetValue(charId, out var entry) ? entry : null;
+        }
+    }
+
     /// <summary>
     /// The variant to load a character's zone with when they attach to it, or empty. Attaching to any other zone
     /// forgets the noted one, so a later visit to the plain zone stays plain.

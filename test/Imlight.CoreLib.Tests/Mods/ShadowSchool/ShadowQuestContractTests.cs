@@ -10,6 +10,7 @@ using Xunit;
 
 namespace Imlight.CoreLib.Tests.Mods.ShadowSchool;
 
+[Collection("SharedConfiguration")]
 public sealed class ShadowQuestContractTests {
 
     private static readonly string[] OriginalSchools = ["FIRE", "ICE", "LIFE", "MYTH", "DEATH", "BALANCE", "STORM"];

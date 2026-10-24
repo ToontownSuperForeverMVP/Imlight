@@ -1,0 +1,44 @@
+{
+  "Zone": "WizardCity/WC_Ravenwood",
+  "Variant": "ShadowConquest-Ashthorn",
+  "Notes": "Shadow School, Stage D2.3 (ConquestEncounters.cs): the private copy of Ravenwood that Ashthorn's binding opens for one Shadow wizard on the quest ShadowSchool-Conquest-Ashthorn. Only a copy loaded with this variant uses this file (the plain Ravenwood file's extra sigils come with it, as with any copy); the public Ravenwood is untouched. From the zone's own gamedata.bin (read on a QA server, 2026-10-23): Malorn Ashthorn (WC-RAV-NPC08, template 81102, the interim Death instructor) does not stand in a school: he is in Ravenwood itself at (229.29, 6034.794, -30.47976), orientation -1.354998, on the plaza ground (Ravenwood's Start and cinematic locations are at Z -30.48). The game's own conversation stand-in for him ('Player Stand In - Malorn Ashthorn') is at (297.4953, 6041.754, -30.47972), 68 units away on the same ground, and the battle circle (560, CombatSigil8Actor) is placed exactly there with a radius of 300. Players arrive at, and leave to, the game's own Loc_WC-COMMONS-MAIN-002-DEATH (641.8373, 5968.792, -28.78596), 352 units from the circle and so outside its radius. The game has no creature of his own: the Death floor boss of the Treasure Tower (1475616, Dworgyn) stands in his place, named for him and spawned as Shadow School custom 1880006 (spiraldb/Customs/1880006.json: Death, level 15, 1200 health, a Death deck with scripted drain). In this copy his NPC self is left out (Remove 81102). Because the copy and its exit are the same zone, every transfer out of it forces a reload (ConquestWorld.Leave, ZoneService). The terrain around the circle is NOT TESTED in the client; no pathNodeData/collision was read. Every way out of this copy, and a lost or fled battle, goes to the Death location above, never back into this copy.",
+  "Objects": [
+    {
+      "Name": "ShadowSchool Death Binding Circle",
+      "Notes": "The battle circle of the death binding.",
+      "TemplateID": 560,
+      "X": 297.4953,
+      "Y": 6041.754,
+      "Z": -30.47972,
+      "Yaw": 3.1416,
+      "Scale": 1,
+      "CombatSigil": {
+        "SigilType": "CombatSigil8Actor",
+        "Radius": 300
+      }
+    }
+  ],
+  "Creatures": [
+    {
+      "Name": "ShadowSchool Bound Death",
+      "Notes": "The stand-in creature (1475616) where the trainer stands; ReplaceSpawns makes it custom 1880006.",
+      "TemplateID": 1475616,
+      "X": 229.29,
+      "Y": 6034.794,
+      "Z": -30.47976,
+      "Yaw": -1.354998
+    }
+  ],
+  "Remove": [
+    81102
+  ],
+  "ReplaceSpawns": {
+    "1475616": 1880006
+  },
+  "Exit": {
+    "Zone": "WizardCity/WC_Ravenwood",
+    "Loc": "641.8373,5968.792,-28.7859,1.7236",
+    "Triggers": [],
+    "Doors": []
+  }
+}

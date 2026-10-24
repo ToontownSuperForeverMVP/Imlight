@@ -1,0 +1,44 @@
+{
+  "Zone": "WizardCity/Interiors/WC_SchoolLife",
+  "Variant": "ShadowConquest-Wu",
+  "Notes": "Shadow School, Stage D2.3 (ConquestEncounters.cs): the private copy of the Life School that Wu's binding opens for one Shadow wizard on the quest ShadowSchool-Conquest-Wu. Only a copy loaded with this variant uses this file; the public Life School is untouched. From the zone's own gamedata.bin (read on a QA server, 2026-10-23): Moolinda Wu (WC-RAV-NPC01, template 38204, the Life trainer) stands at (760.20, 15.49, 100.00), orientation 1.539034; players arrive at Start (-102.26, 4.21, 0.50); the game's own conversation stand-in for her ('Player Stand In instance - Moolinda Wu') is at (617.52, 7.62, 42.76), a lower level, so the school is terraced and her platform is at Z 100. In this copy her trainer self is left out (Remove 38204) and the game's own Moolinda Wu creature (1475615, Life, the Treasure Tower floor boss) stands in her place, spawned as Shadow School custom 1880005 (spiraldb/Customs/1880005.json: Life, level 14, 1300 health, a Life deck with scripted healing and wards). A Duel Circle (560, CombatSigil8Actor, radius 700 as the other Ravenwood school rooms) sits 90 units from her at her own height (Z 100.0), on the same side as the circles of the Fire, Frost, Storm and Myth rooms (every Ravenwood school instructor faces yaw ~1.53-1.58); the zone has no other ground data: its pathNodeData is empty and collision.bcd/zone.nav are not read here, so the platform extent is NOT TESTED in the client. Every way out of this copy, and a lost or fled battle, goes to Ravenwood outside the Life School's door (the Ravenwood LifeSchool Exit location), never back into this copy.",
+  "Objects": [
+    {
+      "Name": "ShadowSchool Life Binding Circle",
+      "Notes": "The battle circle of the life binding.",
+      "TemplateID": 560,
+      "X": 850.1959,
+      "Y": 15.4857,
+      "Z": 100.0,
+      "Yaw": 3.1416,
+      "Scale": 1,
+      "CombatSigil": {
+        "SigilType": "CombatSigil8Actor",
+        "Radius": 700
+      }
+    }
+  ],
+  "Creatures": [
+    {
+      "Name": "ShadowSchool Bound Life",
+      "Notes": "The stand-in creature (1475615) where the trainer stands; ReplaceSpawns makes it custom 1880005.",
+      "TemplateID": 1475615,
+      "X": 760.1959,
+      "Y": 15.4857,
+      "Z": 100.0,
+      "Yaw": 1.539034
+    }
+  ],
+  "Remove": [
+    38204
+  ],
+  "ReplaceSpawns": {
+    "1475615": 1880005
+  },
+  "Exit": {
+    "Zone": "WizardCity/WC_Ravenwood",
+    "Loc": "-2646.668,797.2547,0.0001,-2.2802",
+    "Triggers": [],
+    "Doors": []
+  }
+}

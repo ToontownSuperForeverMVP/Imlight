@@ -1,0 +1,69 @@
+{
+  "CustomID": 1880003,
+  "BaseTemplateID": 1475613,
+  "Name": "",
+  "Notes": "Shadow School, Stage D2.2: Halston Balestrom inside the storm binding (ConquestEncounters.cs, encounter Balestrom). The base is the game's own Halston Balestrom creature (1475613, Storm, the Treasure Tower floor boss), so the custom supplies the whole battle profile: Storm, level 12, only 900 health (Storm trades survivability for damage), no resist, pierce, critical, block, power pips or starting pips, no base flat damage, and a 15% incoming boost against Shadow (an exploitable weakness for a Shadow wizard who commits to a burst). His deck is Storm's damage and its price (verified spell templates, every damage spell 70% accurate): Thunder Snake 2062265892 (rank 1, 105-145) and Lightning Bats 1184018227 (rank 2, 245-285) unlimited, Storm Shark 975292929 (rank 3, 375-435), Kraken 1737191829 (rank 4, 520-580, the dangerous multi-pip attack), Stormblade 2131701592 and Storm Trap 82998574 (once each). He has no ward and no healing. A win gives no extra experience or gold (the quest is the reward and it is given once).",
+  "Health": 900,
+  "Level": 12,
+  "School": "Storm",
+  "DamageBySchool": {
+    "All": 0
+  },
+  "ResistBySchool": {
+    "All": 0
+  },
+  "IncomingBoostBySchool": {
+    "All": 0,
+    "Shadow": 15
+  },
+  "PierceBySchool": {
+    "All": 0
+  },
+  "CriticalBySchool": {
+    "All": 0
+  },
+  "BlockBySchool": {
+    "All": 0
+  },
+  "FlatDamage": 0,
+  "PowerPipChance": 0,
+  "StartingPips": 0,
+  "StartingPowerPips": 0,
+  "ShadowPips": 0,
+  "Deck": [
+    {
+      "SpellID": 2062265892,
+      "Name": "Thunder Snake",
+      "Copies": 0
+    },
+    {
+      "SpellID": 1184018227,
+      "Name": "Lightning Bats",
+      "Copies": 0
+    },
+    {
+      "SpellID": 975292929,
+      "Name": "Storm Shark",
+      "Copies": 1
+    },
+    {
+      "SpellID": 1737191829,
+      "Name": "Kraken",
+      "Copies": 1
+    },
+    {
+      "SpellID": 2131701592,
+      "Name": "Stormblade",
+      "Copies": 1
+    },
+    {
+      "SpellID": 82998574,
+      "Name": "Storm Trap",
+      "Copies": 1
+    }
+  ],
+  "Drops": [],
+  "XP": 0,
+  "GoldMin": 0,
+  "GoldMax": 0
+}

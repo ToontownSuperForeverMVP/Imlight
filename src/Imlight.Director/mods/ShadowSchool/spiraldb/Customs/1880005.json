@@ -1,0 +1,132 @@
+{
+  "CustomID": 1880005,
+  "BaseTemplateID": 1475615,
+  "Name": "",
+  "Notes": "Shadow School, Stage D2.3: Moolinda Wu inside the life binding (ConquestEncounters.cs, encounter Wu). The base is the game's own Moolinda Wu creature (1475615, Life, the Treasure Tower floor boss), so the custom supplies the whole battle profile: Life, level 14, 1300 health, no resist, pierce, critical, block, power pips or starting pips, no base flat damage. Her deck is deliberately modest (verified spell templates, every damage spell 90% accurate): Leprechaun 2106466410 (rank 2, 155-195) and Nature's Wrath 784677378 (rank 3, 240-300) unlimited, one Life Trap 400309488. Her survivability is NOT left to the creature AI, which was checked and cannot be trusted with it: CombatCreatureAIComponent only chooses a healing spell on a round it does not attack, an NPC's aggressiveness (9 on this creature) makes it attack whenever it has a damage spell, and a non-selfish heal or ward is aimed at SlotIndex+1, not at itself. Her heals and wards are therefore the engine's own BossCheats on this custom (CombatResolver.BossCheats.cs): a free Spirit Armor (absorb 400) at the start, Pixie (self heal 400) the first time she falls under 65% and under 35%, each once; Spirit Armor again in rounds 4 and 8; from round 9 a growing damage boost, so the fight is bounded (at most 800 healing and 1600 absorbed, in four Spirit Armors). A win gives no extra experience or gold (the quest is the reward and it is given once).",
+  "Health": 1300,
+  "Level": 14,
+  "School": "Life",
+  "DamageBySchool": {
+    "All": 0
+  },
+  "ResistBySchool": {
+    "All": 0
+  },
+  "IncomingBoostBySchool": {
+    "All": 0
+  },
+  "PierceBySchool": {
+    "All": 0
+  },
+  "CriticalBySchool": {
+    "All": 0
+  },
+  "BlockBySchool": {
+    "All": 0
+  },
+  "FlatDamage": 0,
+  "PowerPipChance": 0,
+  "StartingPips": 0,
+  "StartingPowerPips": 0,
+  "ShadowPips": 0,
+  "Deck": [
+    {
+      "SpellID": 2106466410,
+      "Name": "Leprechaun",
+      "Copies": 0
+    },
+    {
+      "SpellID": 784677378,
+      "Name": "Nature's Wrath",
+      "Copies": 0
+    },
+    {
+      "SpellID": 400309488,
+      "Name": "Life Trap",
+      "Copies": 1
+    }
+  ],
+  "Cheats": {
+    "Changed": {},
+    "Added": [
+      {
+        "When": "BattleStart",
+        "Target": "Self",
+        "Casts": [
+          {
+            "SpellID": 2071077573,
+            "Spell": "Spirit Armor",
+            "Target": "Self"
+          }
+        ],
+        "Notes": "Wu opens behind a ward: Spirit Armor (kAbsorbDamage 400, every school) on herself, free."
+      },
+      {
+        "When": "HealthBelow",
+        "Percent": 65,
+        "MaxTimes": 1,
+        "Target": "Self",
+        "Casts": [
+          {
+            "SpellID": 74836240,
+            "Spell": "Pixie",
+            "Target": "Self"
+          }
+        ],
+        "Notes": "Her first mend: Pixie (kHeal 400 on herself) the first time she is under 65% health."
+      },
+      {
+        "When": "HealthBelow",
+        "Percent": 35,
+        "MaxTimes": 1,
+        "Target": "Self",
+        "Casts": [
+          {
+            "SpellID": 74836240,
+            "Spell": "Pixie",
+            "Target": "Self"
+          },
+          {
+            "SpellID": 2071077573,
+            "Spell": "Spirit Armor",
+            "Target": "Self"
+          }
+        ],
+        "Notes": "Her last mend, once, under 35%: Pixie again and a fresh Spirit Armor. No more healing after this."
+      },
+      {
+        "When": "RoundEnd",
+        "Round": 4,
+        "Every": 4,
+        "MaxTimes": 2,
+        "Target": "Self",
+        "Casts": [
+          {
+            "SpellID": 2071077573,
+            "Spell": "Spirit Armor",
+            "Target": "Self"
+          }
+        ],
+        "Notes": "Rounds 4 and 8: a new Spirit Armor, twice at most. This and the two mends bound everything she can restore."
+      },
+      {
+        "When": "FromRound",
+        "Round": 9,
+        "Every": 2,
+        "Target": "Self",
+        "Actions": [
+          {
+            "Do": "Boost",
+            "Kind": "Damage",
+            "Amount": 15
+          }
+        ],
+        "Notes": "From round 9 the binding strains: +15% damage every second round, stacking. No stalemate survives it."
+      }
+    ]
+  },
+  "Drops": [],
+  "XP": 0,
+  "GoldMin": 0,
+  "GoldMax": 0
+}

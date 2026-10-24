@@ -29,6 +29,10 @@
     <Content Include="spiraldb-extra\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <!-- Mods ([Mods] in Imlight.ini). Their generated folder is written by the server, next to it. -->
+    <Content Include="mods\**" Exclude="mods\*\generated\**;mods\**\__pycache__\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

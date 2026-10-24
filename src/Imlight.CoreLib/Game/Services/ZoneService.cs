@@ -212,6 +212,15 @@ internal class ZoneService(SessionActor sessionActor) : MessageService(sessionAc
         });
     }
 
+    /// <summary>
+    /// Whether a transfer to the zone the wizard is in is really the exit of a private variant copy of it: the wizard's
+    /// noted copy is of this very zone, and the transfer asks for the plain zone (no variant) and has not asked for a reload.
+    /// </summary>
+    internal static bool LeavesVariantCopy(ZONE_102_PROTOCOL.MSG_ZONETRANSFER message, string currentZone, ZoneVariants.Entry copy)
+        => !message.ForceReload && string.IsNullOrEmpty(message.Variant) && !string.IsNullOrEmpty(currentZone)
+           && message.DestinationZone == currentZone && copy is { Variant.Length: > 0 }
+           && string.Equals(copy.Zone, currentZone, StringComparison.OrdinalIgnoreCase);
+
     [MessageHandler(typeof(ZONE_102_PROTOCOL.MSG_ZONETRANSFER))]
     private void ReceiveZoneTransferRequest(ZONE_102_PROTOCOL.MSG_ZONETRANSFER message)
         => RequestZoneTransfer(message);
@@ -245,6 +254,14 @@ internal class ZoneService(SessionActor sessionActor) : MessageService(sessionAc
         if (message.SendToClient && zoneDetails.ErrorCode == 0) {
             // Check if the destination zone is the same as the current zone. If so, just teleport the player.
             var wizard = GetActiveWizard();
+            // A transfer to the zone the wizard is in, from a private variant copy of it, is the copy's exit leading back to
+            // the plain zone (a mod's encounter room in a zone it shares with the public one): the client reloads, and the
+            // note of the copy goes, or the attach after it would land in the copy again.
+            if (LeavesVariantCopy(message, wizard.Zone, ZoneVariants.Of(wizard.CharId))) {
+                ZoneVariants.Remember(wizard.CharId, wizard.Zone, "");
+                message.ForceReload = true;
+            }
+
             if (!message.ForceReload && message.DestinationZone == wizard.Zone && message.HouseLotGid == wizard.AttachedLotGid) {
                 DoTeleport(message.DestinationLocation);
 

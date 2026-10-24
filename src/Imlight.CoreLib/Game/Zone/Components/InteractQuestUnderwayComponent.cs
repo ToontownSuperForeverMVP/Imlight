@@ -45,6 +45,7 @@ using Imcodec.ObjectProperty;
 using Imcodec.ObjectProperty.TypeCache;
 using Imcodec.Types;
 using Imlight.Common;
+using Imlight.CoreLib.Game.Quests;
 using Imlight.CoreLib.Game.WizBang;
 using Imlight.CoreLib.Game.Zone.Core;
 using Imlight.CoreLib.WizardData.Collections;
@@ -188,7 +189,7 @@ internal sealed class InteractQuestUnderwayComponent(ZoneEntity entity)
     public void OnServiceInteraction(IActorRef playerActor, Wizard playerCharacter, CoreObject playerObject, uint serviceOptionIndex) {
         var state = GetOrUpdatePlayerState(playerCharacter);
         if (state.HasUnderwayQuest && state.UnderwayQuest != null) {
-            ShowQuestUnderwayDialog(playerActor, state.UnderwayQuest);
+            ShowQuestUnderwayDialog(playerActor, state.UnderwayQuest, playerCharacter);
         }
     }
 
@@ -223,7 +224,7 @@ internal sealed class InteractQuestUnderwayComponent(ZoneEntity entity)
         return state;
     }
 
-    private void ShowQuestUnderwayDialog(IActorRef playerActor, QuestTemplate quest) {
+    private void ShowQuestUnderwayDialog(IActorRef playerActor, QuestTemplate quest, Wizard playerCharacter) {
         var dialogList = quest.m_dialogList as ActorDialogList;
         var underwayDialogList = dialogList?.m_dialogs.FirstOrDefault(de => de.m_dialogTag == "Underway");
 
@@ -234,7 +235,7 @@ internal sealed class InteractQuestUnderwayComponent(ZoneEntity entity)
             return;
         }
 
-        SendActorDialog(playerActor, underwayDialogList, "QuestInfo");
+        SendActorDialog(playerActor, QuestDialogueResolver.Resolve(playerCharacter, quest, null, underwayDialogList), "QuestInfo");
     }
 
     private void SendActorDialog(IActorRef playerActor, ActorDialog dialogEntry, string completionType, ulong questId = 0, ulong goalId = 0) {

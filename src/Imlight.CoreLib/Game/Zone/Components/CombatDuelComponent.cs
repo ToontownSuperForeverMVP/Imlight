@@ -2314,7 +2314,6 @@ internal sealed partial class CombatDuelComponent(ZoneEntity entity)
                 Logger.Args(Duel.m_duelID.Full, caster.SlotIndex, spell.m_templateID));
 
             CombatResolver.AddCombatMove(CombatMoveType.Pass, caster, null, null);
-
             return;
         }
 
@@ -2464,6 +2463,8 @@ internal sealed partial class CombatDuelComponent(ZoneEntity entity)
         if (drainMana) {
             CombatResolver?.NotePlayerFled(caster);
         }
+
+        ReportOutcome(drainMana ? BattleResult.Fled : BattleResult.Left, caster, CreaturesOfBattle());
 
         // Inform the client that they've been removed from this duel.
         var defeatMsg = NewDefeat(diedInDuel: false);
@@ -2642,7 +2643,7 @@ internal sealed partial class CombatDuelComponent(ZoneEntity entity)
                 return;
             }
 
-            circle.DoPipGain(highestArchmastery);
+            circle.DoPipGain(highestArchmastery, Duel.m_roundNum + 1);
         });
     }
 
@@ -3194,6 +3195,8 @@ internal sealed partial class CombatDuelComponent(ZoneEntity entity)
         var templateIdsOfDefeatedMobs = new List<ulong>();
         // What each one drops by: its custom's key (Customs.cs) or its template id.
         var lootKeysOfDefeatedMobs = new List<ulong>();
+        // What the mods are told was defeated (BattleOutcomeEvents), read before the custom marks are forgotten.
+        var defeatedCreatures = new List<BattleCreature>();
         // A defeated minion on the enemy side (a .joinme boss, a boss's second form) may have left its circle already.
         var defeatedMobs = new List<(ulong TemplateId, ulong GlobalId)>();
         EnactActionOnSubCircles(circle => {
@@ -3233,6 +3236,7 @@ internal sealed partial class CombatDuelComponent(ZoneEntity entity)
             templateIdsOfDefeatedMobs.Add(gameObjectTemplate.m_templateID);
             lootKeysOfDefeatedMobs.Add(Customs.Of(mobGlobalId) is var custom and > 0
                 ? Customs.Key(custom) : gameObjectTemplate.m_templateID);
+            defeatedCreatures.Add(new BattleCreature(gameObjectTemplate.m_templateID, Customs.Of(mobGlobalId), mobGlobalId));
             Customs.Forget(mobGlobalId);
         }
 
@@ -3263,6 +3267,7 @@ internal sealed partial class CombatDuelComponent(ZoneEntity entity)
         });
 
         PostMonsterKilledEvents(adjectivesPerDefeatedMob);
+        EnactActionOnSubCircles(circle => ReportOutcome(BattleResult.Won, circle, defeatedCreatures));
 
         // A won battle (not one everybody fled) leaves health, mana and gold wisps behind.
         BattleDrops.Spawn(Entity.ZoneRef, Entity.ActiveGameObject.m_location);
@@ -3297,6 +3302,13 @@ internal sealed partial class CombatDuelComponent(ZoneEntity entity)
     private void CreatureWin() {
         Logger.Debug("Duel {0} | Duel ended. Creatures win.", Logger.Args(Duel.m_duelID.Full));
 
+        var creatures = CreaturesOfBattle();
+        EnactActionOnSubCircles(circle => {
+            if (circle.AddedToDuel) {
+                ReportOutcome(BattleResult.Lost, circle, creatures);
+            }
+        });
+
         // Send combat death to all creatures anyways. This will get rid of their game object. The ones still
         // standing were not defeated, so their spawn points spawn again, even in a private instance.
         var deathMsg = new COMBAT_106_PROTOCOL.MSG_COMBATDEATH();
@@ -3327,6 +3339,32 @@ internal sealed partial class CombatDuelComponent(ZoneEntity entity)
 
             circle.ParticipantActor.Tell(defeatMsg);
         });
+    }
+
+    /// <summary>
+    /// Tells the mods how the battle ended for one wizard (BattleOutcomeEvents), with the zone copy it was fought in.
+    /// PvP duels, creatures and minions are not reported.
+    /// </summary>
+    private void ReportOutcome(BattleResult result, CombatDuelSubCircle circle, IReadOnlyList<BattleCreature> creatures) {
+        if (IsPvPDuel || circle?._wizard is null || !circle.IsHumanPlayer || circle.OccupiedTeam != CombatTeam.Player) {
+            return;
+        }
+
+        var zone = Entity.Zone;
+        BattleOutcomeEvents.Report(new BattleOutcome(result, circle._wizard, circle.ParticipantActor, zone?.ZonePath ?? "",
+            zone?.Extras.Variant ?? "", zone?.IsInstance == true, creatures));
+    }
+
+    // The creatures on the enemy side now, as a battle outcome names them.
+    private List<BattleCreature> CreaturesOfBattle() {
+        var creatures = new List<BattleCreature>();
+        EnactActionOnSubCircles(circle => {
+            if (circle.OccupiedTeam == CombatTeam.Monster && circle.ParticipantObject is { } creature) {
+                creatures.Add(new BattleCreature(creature.m_templateID, Customs.Of(creature.m_globalID), creature.m_globalID));
+            }
+        });
+
+        return creatures;
     }
 
     private void RemovePlayersFromDuel(bool playersWin) => EnactActionOnSubCircles(circle => {

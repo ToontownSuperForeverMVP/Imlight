@@ -346,7 +346,8 @@ public class CombatDuelSubCircle {
     /// The round's pips, then Archmastery. <paramref name="highestArchmastery"/> is the most Archmastery anyone
     /// in the battle has.
     /// </summary>
-    internal void DoPipGain(float highestArchmastery) {
+    internal void DoPipGain(float highestArchmastery, int round = 0) {
+        _round = round;
         GainPips();
         RefillLightAndShadow();
         if (ArchmasteryActive) {

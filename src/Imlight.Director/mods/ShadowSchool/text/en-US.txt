@@ -138,3 +138,217 @@ CyclopsCheckInInfo = Tell Vespera how you helped the students in Cyclops Lane.
 CyclopsCheckInGoal = Speak with Vespera Quillmoor
 CyclopsCheckInOffer = You have finished the work in Cyclops Lane. Tell me what you found.
 CyclopsCheckInReaction = Cyrus's orders kept people alive, but a command can still become a cage. You found the students and dealt with Akilles without treating every disagreement as disobedience.
+
+# Stage C2.1: Ambrose's reunion (A Brief History of the Spiral, WC-OLDE-MAIN-003A), shown only to a Shadow wizard
+# (ShadowMainlineDialogue.AmbroseReunion). Unvoiced lines placed between his canonical, voiced ones.
+ReunionAmbroseStreets = Triton Avenue, Firecat Alley and Cyclops Lane, all three set right, by the student this school was least sure how to teach. Vespera Quillmoor will say that proves something about Shadow magic. I say it proves something about you.
+ReunionAmbroseForbidden = Forgive an old man for dwelling on that word: forbade. Your magic already reaches past what Ravenwood teaches, and I do not hold that against you. But Malistaire shows what a brilliant wizard becomes when he heeds no warning.
+ReunionAmbroseEye = Ah, that caught your attention. An Eye that holds all of history decides what the Spiral remembers, and who may know it. Whoever took it took far more than a jewel. Want it found, Wizard, not owned.
+
+# Stage C2.2: the Foulgaze investigation (A Brief History of the Spiral), Throwing Nightshade and Things and Stuff,
+# shown only to a Shadow wizard (ShadowMainlineDialogue). Unvoiced lines added between canonical, voiced ones.
+BartlebyEye = Do not look away, Wizard. I see the question forming: who may look through an Eye like that, and who decides? Keep it. It is a good question, though not one Bartleby can answer today.
+FoulgazeTaunt = Ah, and you carry Shadow with you. I can smell it. Tell me, little student, how many shelves in your school are closed to you? The living love to lock their libraries. The dead are far more generous.
+FoulgazeBooks = Books hoarded, books hidden, books handed up to some master. Every power keeps a locked room, Wizard. Ask who holds the keys, and who handed them over.
+DaisyCave = Oh! You are a Shadow student, aren't you? Wowzer. I looked for books on Shadow magic in the Library. Every shelf. Not one. Either nobody wrote them, or somebody put them where I'm not allowed.
+NightshadeOffer = You've got a funny look, by the way, like a candle that decided to be a shadow instead. I mean that nicely! I think the curious kind of magic is always the kind people warn you about.
+NightshadeTower = And what is this? You carry a little shade of your own. Kneel, child, and I may let you serve at my right hand. Refuse, and you will serve at my feet, like all the rest.
+NightshadeDefeat = Ten thousand voices, and not one dared tell me no. Do you know how quiet that is? Hmph. Spare me your pity, child. Take your victory.
+DaisyNightshade = You came back with a funny look, like you watched someone hold power so tight it choked him. Wowzer. Write that down somewhere. I would, if I had a pencil. Do you have a pencil?
+PumpkinOffer = Funny thing: you keep glancing past my shoulder. Is something standing there? No? Hm. Probably nothing. Probably. Ghosts do tend to say hello to certain people first.
+PumpkinReturn = Odd thing, though: the Pumpkin Heads keep turning toward you. Not me. I have been right here the whole time, doing science at them.
+
+# Stage C2.3: Take a Walk on the Nightside (ShadowMainlineDialogue). Unvoiced lines added between canonical, voiced ones;
+# a first hint of something unexplained, with no power granted.
+NightsideEnchantReaction = Hold a moment. That should settle like a cold draught behind the eyes, as it does for everyone. For you it went in like a key into a lock it already knew. You felt it too; it is written across your face.
+NightsideEnchantCaution = I cannot tell you what that was, Wizard, because I have not seen its like. So do not force it. A borrowed sight is meant to be worn lightly and put away. Look only as far as you must, and come straight back if it grows louder.
+NightsideMortis = Strange. The dead drift past me without a glance, yet you watch the dark between my roots as though it were watching back. I have stood in this shade a long while, child, and I do not know what that means. Tread gently here.
+NightsideDworgyn = Hm. Funny thing: the shadows in here usually sulk in the corners, but a few keep leaning toward you. Probably the dust. I will sweep later. Maybe ask Mortis. He knows everyone's business, mostly by standing around.
+NightsideAfterimage = Mm. That enchantment came undone the moment you left; I felt it unravel. And yet you keep looking at the corner of my study as though something stood there. Tell me honestly: is there a faint afterimage, like the glow after staring at a candle?
+NightsideAfterimageHold = It should not linger. No borrowed sight I know of lingers. I do not yet understand it, and I will not pretend to. Say nothing of it to anyone, do not chase it, and we will look into it together when the time is right. Now, tell me what you found down there.
+
+# Stage C3: Umbral Sight. Ambrose, at Wit Your Way to Krokotopia's start (only once the sight is unlocked), before his
+# canonical, voiced lines; protective, and he points the student to Vespera.
+UmbralSightAmbroseLasting = Before anything else: the afterimage. It has not faded, has it? I can see it in how you look at a room, as if you were counting the threads in it. Then it is not borrowed any longer. It is yours, and that is a responsibility before it is a gift.
+UmbralSightAmbroseVespera = I asked you to tell no one. Let me make one exception: Vespera Quillmoor, in the Library. She knows more of your school than I do. Learn from her what it is, not what it can do, and do not go peering where you are not welcome.
+
+# Vespera's lesson (quest ShadowSchool-UmbralSight-Lesson): perceiving a binding is not understanding or controlling it.
+UmbralLessonTitle = What the Eye Keeps
+UmbralLessonInfo = Tell Vespera about the afterimage that stayed after Ambrose's enchantment faded.
+UmbralLessonGoal = Speak with Vespera Quillmoor
+UmbralLessonOffer = Ambrose sent you? Then it stayed. Sit, and tell me exactly what you see when a room goes quiet.
+UmbralLessonSeeing = What you have is Umbral Sight, or the first of it: you can see where a spell has been bound to a person, a place or a thing. The knot, the anchor, the loose end. That is all, and it is more than most wizards ever see.
+UmbralLessonLimits = Seeing a binding is not understanding it, and understanding is not holding it. You cannot loosen anything with your eyes. Look at a ward long enough and you will know it is there; you will not know what it guards, or why. Do not pretend otherwise.
+UmbralLessonPractice = Practise gently. When you feel the pull, stop where you are and let your eyes settle; the sight comes to the patient, not the curious. And when it shows you something that belongs to someone else, look, learn, and leave it as you found it.
+
+# What the sight shows (UmbralPerception): the hint when a binding is near, then, after standing still, the notice and what
+# is perceived (chat). Perception only: what kind of thing is bound, never who bound it, what it guards or how to break it.
+Umbral_Hint = Umbral Sight: something nearby has been bound. Stand still and let your eyes settle.
+Umbral_Notice = Umbral Sight: a binding comes into focus.
+Umbral_RavenwoodRoots = [Umbral Sight] Threads of very old binding magic run out from Bartleby's roots, under the lawns, toward every school in Ravenwood. You can see that they are bound. You cannot see what they carry, or who tied them.
+Umbral_AmbroseWards = [Umbral Sight] A protective binding is layered through the Headmaster's study, patient and very old. It is made to keep harm out. It does not stir as you look at it, and it does not tell you what else it keeps.
+Umbral_NightsideThread = [Umbral Sight] A loose thread hangs in the dark near Mortis: the last of Ambrose's enchantment, where it carried you in. It is tied to nothing now. Mortis's own roots are bound to the earth in a way that has nothing to do with you.
+Umbral_DeathSchoolCut = [Umbral Sight] Something in this hall was held by a binding that has been cut, not undone. The edge is ragged. The thread does not say who cut it, only that whatever it held is held no longer.
+Umbral_UnlistedAisle = [Umbral Sight] This aisle is wrapped in a quiet charm that asks passing eyes to slide over it. Yours do not, any more. Whoever placed it meant the aisle to be found only by those already looking for it.
+
+# Stage D1: the Ravenwood conquest, first encounter (ConquestEncounters.cs, quest ShadowSchool-Conquest-Falmea). Vespera
+# offers it; she warns and does not send. Falmea is betrayed, not cruel; the binding holds her back. All unvoiced.
+ConquestFalmeaTitle = The Hearth Binding
+ConquestFalmeaInfo = Ravenwood's wards are bound to its teachers. You have chosen to test the first of them, in the Fire School, against Professor Falmea herself.
+ConquestFalmeaGoalAnchor = Find the binding in the Fire School
+ConquestFalmeaGoalReturn = Return to Vespera Quillmoor
+# The journal's location line for the anchor and the duel (m_locationName); the game's own place name for the room.
+ConquestFalmeaLocation = Wizard City|Fire School
+ConquestFalmeaOffer = Ambrose has made his terms plain: study the sight under his eye, or set it aside. You have refused both. I will not pretend I did not see it coming, and I will not pretend it is wise.
+ConquestFalmeaChoice = Every school's wards are tied to the one who teaches there, and the Fire School's are the plainest to find. If you go, you go by your own choice. I am not sending you, and I will not fight it for you.
+ConquestFalmeaNotices = I felt that. You were looking at my wards as if they were a lock to be picked. I spoke up for you after Firecat Alley, you know. I told Ambrose your talent would find its discipline.
+ConquestFalmeaWarns = If you mean to test them, look again, and the binding will take us both where no one else can be hurt. It will hold back most of what I am. It will not hold back all of it.
+ConquestFalmeaYields = Enough. The binding has decided, not me. Talent without discipline burns the ones who stand closest, and you have just shown me how much talent you have.
+ConquestFalmeaMeasure = You won the ward, not the argument. Remember that the measure of power is not merely whether it works. My classroom is still open. Go, before I say something I would regret.
+ConquestFalmeaVesperaAfter = So it held, and then it did not. The Fire School's binding knows you now; you can see the knot where it answered you. That is all you have taken, and it is already more than Ravenwood will forgive easily.
+ConquestFalmeaVesperaCost = Falmea is teaching her classes as she was this morning, and she will not forget. There are six more bindings like that one, and Ambrose behind them. Rest before you decide whether to go on.
+Umbral_FireHearth = [Umbral Sight] A defensive binding is wound through the Fire School's hearth and tied to the one who teaches here. It is a ward, patient and warm. You can see where it is anchored; you cannot see what testing it would cost.
+Conquest_Falmea_Enter = The hearth binding closes around you. You stand in its reflection of the Fire School, alone with Dalia Falmea. The ward holds back most of her power, and none of her will.
+Conquest_Falmea_Won = The hearth binding loosens and lets you go. Its knot stays where your sight can find it. You will be returned to Ravenwood.
+Conquest_Falmea_Lost = The hearth binding casts you out; Falmea's ward still holds. Look at its anchor in the Fire School again when you are ready.
+
+# Stage D2: the overarching conquest (quest ShadowSchool-Conquest) and its second encounter, Lydia Greyrose. The campaign
+# is Vespera's stated plan, not an order: she warns, does not send, and names the next door. All unvoiced.
+ConquestTitle = The Unbound Student
+ConquestInfo = Seven teachers stand between you and the wards of Ravenwood. You chose this path; the bindings will let you face them one at a time, beginning with the Fire School.
+ConquestOffer = You have seen what the Sight can hold. The faculty will not hand you the school's wards, and Ambrose will not look away while you try. If you mean to go on, you will have to face each of them where their own binding is weakest.
+ConquestTerms = I will not send you and I will not stop you. Each binding is a door; each teacher is standing in it. Start with Falmea, if you still mean to start at all.
+ConquestMilestoneFalmea = Face Dalia Falmea
+ConquestMilestoneGreyrose = Face Lydia Greyrose
+ConquestMilestoneBalestrom = Face Halston Balestrom
+ConquestMilestoneDrake = Face Cyrus Drake
+ConquestMilestoneWu = Face Moolinda Wu
+ConquestMilestoneAshthorn = Face Malorn Ashthorn
+ConquestMilestoneWethersfield = Face Arthur Wethersfield
+
+# Stage D2, encounter two: the frost binding. Greyrose is careful, not cruel; she asks the wizard to stop before anyone is
+# hurt, and she fights with shields, patience and a little ice.
+ConquestGreyroseTitle = The Frost Binding
+ConquestGreyroseInfo = The Ice School's wards are tied to Lydia Greyrose. She will ask you to reconsider before she defends them. You have chosen to test the second binding anyway.
+ConquestGreyroseGoalAnchor = Find the binding in the Ice School
+ConquestGreyroseGoalDuel = Defeat Lydia Greyrose
+ConquestGreyroseGoalReturn = Return to Vespera Quillmoor
+ConquestGreyroseLocation = Wizard City|Ice School
+ConquestGreyroseOffer = Greyrose will not shout at you. That is worse. She will ask you to think, and she will mean it, and she will still stand in the door.
+ConquestGreyroseChoice = The Frost School's binding is under the ice of her classroom. She will feel you coming. If you go, you go by your own choice; I am not sending you, and I will not soften what she says.
+ConquestGreyroseNotices = You already know how to save people. Must you also learn how to frighten them? I felt the ward turn as you looked at it. I had hoped you would come to class instead.
+ConquestGreyroseWarns = I will not let you take the school's wards. If that makes me your enemy, I will be a patient one. The binding will keep this quiet; it will not keep either of us safe from what we say.
+ConquestGreyroseYields = You have made your point. I yield the binding, not my judgement. There is a difference, and you would do well to learn it before the next door.
+ConquestGreyroseMeasure = You won the ward, not the argument. I will teach tomorrow, and I will watch what you do with what you took. Go back to your tutor before you decide anything else.
+ConquestGreyroseVesperaAfter = Greyrose yielded, and she will keep teaching as if nothing happened. That is not forgiveness; it is care. She is giving you a chance to stop, and you should notice that she did not have to.
+ConquestGreyroseVesperaCost = The Frost binding knows you now. The others will hear what happened here, and the next door will be harder. Rest, and think about whether you are still choosing this or only continuing it.
+Umbral_FrostClassroom = [Umbral Sight] A defensive binding is wound through the Ice School's floor and tied to the one who teaches here. It is patient and cold, built to outlast rather than to strike. You can see where it is anchored; you cannot see how much of her patience is left.
+Conquest_Greyrose_Enter = The frost binding closes around you. You stand in its reflection of the Ice School, alone with Lydia Greyrose. The ward holds back most of her power, and none of her disappointment.
+Conquest_Greyrose_Won = Greyrose lowers her wand, and the frost binding loosens. Its knot stays where your sight can find it. You will be returned to Ravenwood.
+Conquest_Greyrose_Lost = The frost binding sets you outside its door; Greyrose's ward still holds. Look at its anchor in the Ice School again when you are ready.
+
+# Stage D2.2, encounter three: the storm binding. Balestrom is loud, delighted and entirely serious; he fights with all the
+# lightning he has and very little defence.
+ConquestBalestromTitle = The Storm Binding
+ConquestBalestromInfo = The Storm School's wards are tied to Halston Balestrom. He will greet you like a favourite student and then try to put you through a wall. You have chosen to test the third binding anyway.
+ConquestBalestromGoalAnchor = Find the binding in the Storm School
+ConquestBalestromGoalDuel = Defeat Halston Balestrom
+ConquestBalestromGoalReturn = Return to Vespera Quillmoor
+ConquestBalestromLocation = Wizard City|Storm School
+ConquestBalestromOffer = Balestrom will be delighted to see you, and he will mean it, and he will still hit you with everything he has. Both are sincere. That is what makes him dangerous.
+ConquestBalestromChoice = The Storm School's binding is wound through the lightning rods of his classroom. If you go, you go by your own choice; I am not sending you, and I will not ask him to go gently.
+ConquestBalestromNotices = Ha! Do you feel that? The whole room hums when you look at it! I felt it down to my boots. Shadow, they tell me, and still you come to my door instead of my class. Well. Well, well!
+ConquestBalestromWarns = I am a cheerful man and I will be cheerful while I do this, but do not mistake it for mercy! The binding keeps the thunder off the walls and puts all of it on my side of the room. Mind your footing and mind your nerve!
+ConquestBalestromYields = Hah! Down, and with style! A reckless, glorious bit of work, and I am not even angry. Not very. The binding yields; the lesson, my student, does not.
+ConquestBalestromMeasure = You are fast, and fast is not the same as right. I will be in my classroom tomorrow, lightning rods and all, and I will expect you to know the difference. Go, go, the binding is loosening.
+ConquestBalestromVesperaAfter = He laughed all the way down, I am told, and then he did not. That is how you know it mattered to him. The Storm binding knows you now; its knot is where your sight can find it.
+ConquestBalestromVesperaCost = Three bindings know you now, and four doors are left. Balestrom was loud about it. The quiet ones will not be. Eat something, and decide whether you are still choosing this.
+Umbral_StormClassroom = [Umbral Sight] A restless binding crackles through the Storm School's lightning rods and is tied to the one who teaches here. It was made to be struck. You can see where it is anchored; you cannot see how much of him is holding back.
+Conquest_Balestrom_Enter = The storm binding closes around you. You stand in its reflection of the Storm School, alone with Halston Balestrom. The ward holds back the walls, and none of his enthusiasm.
+Conquest_Balestrom_Won = Balestrom lowers his wand, and the storm binding settles. Its knot stays where your sight can find it. You will be returned to Ravenwood.
+Conquest_Balestrom_Lost = The storm binding throws you out of its door; Balestrom's ward still crackles. Look at its anchor in the Storm School again when you are ready.
+
+# Stage D2.2, encounter four: the myth binding. Drake is stern, dismissive and precise; he does not shout, and he fights by
+# taking apart whatever the wizard hides behind.
+ConquestDrakeTitle = The Myth Binding
+ConquestDrakeInfo = The Myth School's wards are tied to Cyrus Drake. He believes your power is being mistaken for understanding, and he intends to prove it. You have chosen to test the fourth binding anyway.
+ConquestDrakeGoalAnchor = Find the binding in the Myth School
+ConquestDrakeGoalDuel = Defeat Cyrus Drake
+ConquestDrakeGoalReturn = Return to Vespera Quillmoor
+ConquestDrakeLocation = Wizard City|Myth School
+ConquestDrakeOffer = Drake will not shout and he will not flatter. He will explain, precisely, why you are not ready, and then he will demonstrate it.
+ConquestDrakeChoice = The Myth School's binding runs through the old reading room of his classroom, and he reads it better than anyone living. If you go, you go by your own choice. I am not sending you, and I would not ask you to be impressed by him.
+ConquestDrakeNotices = So you have noticed the ward. Observation is not understanding, and power is not wisdom, though the young seem to find the two interchangeable. Three of my colleagues have indulged you. I will not.
+ConquestDrakeWarns = I will give you what I give anyone who mistakes strength for comprehension: the exact shape of the error. The binding will keep the walls standing. It will do nothing for your pride, and nothing for whatever you are hiding behind.
+ConquestDrakeYields = Hm. The binding yields, and I note that it was not your understanding that opened it. Whether you know why you won is a separate question. I suspect you do not.
+ConquestDrakeMeasure = Do not mistake this for a lesson learned. You have the power, I grant that. You lack the discipline to know when not to use it. Come to my classroom when you are ready to be corrected.
+ConquestDrakeVesperaAfter = He called it a demonstration. From Drake that is very nearly respect, and it will annoy him to have said it. The Myth binding knows you now; its knot is where your sight can find it.
+ConquestDrakeVesperaCost = Four have answered and three are left, and the rest will have heard what Drake saw. Whatever you decide next, decide it because you understand it, not because it worked.
+Umbral_MythClassroom = [Umbral Sight] A binding of old stories and exact wording runs through the Myth School's reading room, tied to the one who teaches here. It is precise. You can see where it is anchored; you cannot see what he thinks of you.
+Conquest_Drake_Enter = The myth binding closes around you. You stand in its reflection of the Myth School, alone with Cyrus Drake. The ward holds back the walls, and none of his scepticism.
+Conquest_Drake_Won = Drake lowers his wand, and the myth binding gives way. Its knot stays where your sight can find it. You will be returned to Ravenwood.
+Conquest_Drake_Lost = The myth binding sets you outside its door; Drake's ward still holds. Look at its anchor in the Myth School again when you are ready.
+
+# Stage D2.3, encounter five: the life binding. Wu is warm and does not budge. She understands why the wizard is angry and
+# will not let that anger near the people she looks after; she fights to protect, not to hurt.
+ConquestWuTitle = The Life Binding
+ConquestWuInfo = The Life School's wards are tied to Moolinda Wu. She understands your frustration and will not make you pay for it, but she will not step aside either. You have chosen to test the fifth binding anyway.
+ConquestWuGoalAnchor = Find the binding in the Life School
+ConquestWuGoalDuel = Defeat Moolinda Wu
+ConquestWuGoalReturn = Return to Vespera Quillmoor
+ConquestWuLocation = Wizard City|Life School
+ConquestWuOffer = Wu will not trade blows for the pleasure of it. She will mend what you break and shield what you threaten, and she will keep doing it until you see that she is not the one who needs to be worn down.
+ConquestWuChoice = The Life School's binding runs through the garden of her classroom, and she tends it the way she tends everything. If you go, you go by your own choice; I am not sending you, and I will not pretend she is an easy door.
+ConquestWuNotices = I felt that. Not a spell, a pulling at the roots. You are no stranger to me, you know. I have taught the children who are afraid of you now, and I know exactly what it costs to be told that what you are is the problem.
+ConquestWuWarns = I understand wanting what the school will not tell you. I do. But these wards keep every student in this city safe, and I will not let them become a leash. The binding will keep the garden standing. It will not make me stop caring what becomes of you.
+ConquestWuYields = That is enough, dear. The binding yields, and so do I, for today. You are strong, and you have not once used it to hurt me more than you had to. Hold on to that part of yourself.
+ConquestWuMeasure = Strength was never in doubt. What you do with it when no one is standing in your way is the lesson, and I cannot teach it from the ground. My door stays open. Go and rest.
+ConquestWuVesperaAfter = Wu mended more than she harmed, and still she kept you from the door. That is what protection looks like when it refuses to be cruel. The Life binding knows you now; its knot is where your sight can find it.
+ConquestWuVesperaCost = Five have answered and two are left. Wu will not hold this against you, which is why it will be heavy to carry. Malorn Ashthorn is next. He keeps no classroom: he stands in Ravenwood itself.
+Umbral_LifeClassroom = [Umbral Sight] A binding of slow growth runs through the Life School's garden and is tied to the one who teaches here. It mends as fast as it is cut. You can see where it is anchored; you cannot see where its patience ends.
+Conquest_Wu_Enter = The life binding closes around you. You stand in its reflection of the Life School, alone with Moolinda Wu. The ward holds back the walls, and none of her care.
+Conquest_Wu_Won = Wu lowers her wand, and the life binding gives way. Its knot stays where your sight can find it. You will be returned to Ravenwood.
+Conquest_Wu_Lost = The life binding sets you outside its door; Wu's ward still holds. Look at its anchor in the Life School again when you are ready.
+
+# Stage D2.3, encounter six: the death binding. Ashthorn is the interim Death instructor, dry and wary. He knows the line
+# between the forbidden and the merely unspoken is thinner than the handbook admits, and he fights with patience and
+# borrowed strength, not malice.
+ConquestAshthornTitle = The Death Binding
+ConquestAshthornInfo = Malorn Ashthorn keeps no classroom of his own; the binding he holds is wound into the air of Ravenwood where he stands. He knows how thin the line between forbidden and permitted magic really is. You have chosen to test the sixth binding anyway.
+ConquestAshthornGoalAnchor = Find the binding near Malorn Ashthorn
+ConquestAshthornGoalDuel = Defeat Malorn Ashthorn
+ConquestAshthornGoalReturn = Return to Vespera Quillmoor
+ConquestAshthornLocation = Wizard City|Ravenwood
+ConquestAshthornOffer = Ashthorn will not shout, preach or flatter. He will ask you one quiet question about control, and he will fight with the patience of a man who has seen where the answer leads.
+ConquestAshthornChoice = The binding he keeps is not in a classroom. It is wound through the air of Ravenwood, where he stands. If you go, you go by your own choice; I am not sending you. He has watched Malistaire's shadow fall across his own school, and he is in no hurry to watch it fall across you.
+ConquestAshthornNotices = You see it, then. Good; most do not. The line between what is forbidden and what is merely unspoken is thinner than the handbook admits, and I have stood on both sides of it. Careful now.
+ConquestAshthornWarns = I do not say it to frighten you. Command magic long enough and it begins to command you, and from the inside the two look exactly alike. The binding will keep this quiet. It will not keep either of us from what we say.
+ConquestAshthornYields = So. The binding gives, and the drain on me stops with it. I will not say you were wrong to try. I will say that I know the look you are wearing, because I once wore it myself.
+ConquestAshthornMeasure = Ask whether you would want to be stopped before it is too late, not whether you can be. I will not tell you here what I saw of Malistaire's fall. Perhaps I will, if you are still asking when this is over. Go back.
+ConquestAshthornVesperaAfter = Ashthorn took what you gave him without anger, and gave you something harder than a defeat: he understood you. The Death binding knows you now; its knot is where your sight can find it.
+ConquestAshthornVesperaCost = Six have answered and one is left. Arthur Wethersfield is the last of the faculty before Ambrose, and nothing you have won so far will move him. Rest, and decide what you mean to do when this ends.
+Umbral_DeathInterim = [Umbral Sight] A binding of borrowed authority is wound through the air of Ravenwood and tied to the one who stands here. It takes as much as it gives. You can see where it is anchored; you cannot see how much of him it has already taken.
+Conquest_Ashthorn_Enter = The death binding closes around you. You stand in its reflection of Ravenwood, alone with Malorn Ashthorn. The ward holds back the world, and none of his warning.
+Conquest_Ashthorn_Won = Ashthorn lowers his wand, and the death binding gives way. Its knot stays where your sight can find it. You will be returned to Ravenwood.
+Conquest_Ashthorn_Lost = The death binding sets you outside its door; Ashthorn's ward still holds. Look at its anchor in Ravenwood again when you are ready.
+
+# Stage D2.3, encounter seven: the balance binding. Wethersfield is fair, exact and unimpressed. He does not doubt the
+# wizard's ability; he doubts that ability is a reason. He prepares the wizard for Ambrose.
+ConquestWethersfieldTitle = The Balance Binding
+ConquestWethersfieldInfo = Arthur Wethersfield holds the last faculty binding the way he holds everything: carefully, and in proportion. He does not doubt your ability, only the claim that ability is a reason. You have chosen to test the seventh binding anyway.
+ConquestWethersfieldGoalAnchor = Find the binding near Arthur Wethersfield
+ConquestWethersfieldGoalDuel = Defeat Arthur Wethersfield
+ConquestWethersfieldGoalReturn = Return to Vespera Quillmoor
+ConquestWethersfieldLocation = Wizard City|Ravenwood
+ConquestWethersfieldOffer = Wethersfield will be fair, which is the worst thing he can be to someone set on being unfair. He will measure what you do, answer it in kind, and decline to be impressed.
+ConquestWethersfieldChoice = The last faculty binding is wound through the air of Ravenwood where he stands, and it is balanced against every other. If you go, you go by your own choice; I am not sending you. After him there is only Ambrose, and I would not wish you to meet Ambrose unprepared.
+ConquestWethersfieldNotices = You have noticed the scale. Good; it was meant to be noticed. Six of my colleagues have stood where I am standing, and I do not doubt you earned each of them. That is not the question. Winning is not the same as being right.
+ConquestWethersfieldWarns = A pact signed under coercion is not balanced; it is a debt with a ribbon on it. I will meet you evenly, which is more than you are offering this school. Mind the binding: it tilts toward whoever refuses to cheat it.
+ConquestWethersfieldYields = Evenly matched at the last, then, and I will say so plainly. The binding yields, as it must. Understand what you have taken: not a victory over Ravenwood, but its attention. It is looking at you now.
+ConquestWethersfieldMeasure = That makes seven. Ambrose will not argue as I have, and he will not be gentle about it; he has watched what becomes of students who mistake power for permission. Decide with your eyes open. Whatever you decide, I will stand by the rules.
+ConquestWethersfieldVesperaAfter = Wethersfield stood against you without once pretending it was personal. The Balance binding knows you now, and so do the other six; every knot you can see is one you pulled.
+ConquestWethersfieldVesperaCost = That is all seven. Nothing stands between you and Ambrose now but your own decision, and he has the most reason of anyone to fear what you have become. I will not tell you he is wrong, or that you are. Be ready for both.
+Umbral_BalanceCircle = [Umbral Sight] A binding of counterweights is wound through the air of Ravenwood and tied to the one who stands here. Everything it holds is held against something else. You can see where it is anchored; you cannot see what it is balanced against.
+Conquest_Wethersfield_Enter = The balance binding closes around you. You stand in its reflection of Ravenwood, alone with Arthur Wethersfield. The ward holds back the world, and none of his fairness.
+Conquest_Wethersfield_Won = Wethersfield lowers his wand, and the balance binding settles. Its knot stays where your sight can find it. You will be returned to Ravenwood.
+Conquest_Wethersfield_Lost = The balance binding sets you outside its door; Wethersfield's ward still holds. Look at its anchor in Ravenwood again when you are ready.

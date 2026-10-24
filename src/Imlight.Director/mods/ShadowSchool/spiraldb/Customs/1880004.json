@@ -1,0 +1,73 @@
+{
+  "CustomID": 1880004,
+  "BaseTemplateID": 1475614,
+  "Name": "",
+  "Notes": "Shadow School, Stage D2.2: Cyrus Drake inside the myth binding (ConquestEncounters.cs, encounter Drake). The base is the game's own Cyrus Drake creature (1475614, Myth, the Treasure Tower floor boss), so the custom supplies the whole battle profile: Myth, level 13, 1100 health, 10% pierce in every school, no resist, critical, block, power pips or starting pips, and no base flat damage. His deck punishes a wizard who sits behind wards (verified spell templates, damage spells 80% accurate): Pierce 1911022320 (kRemoveWard on one enemy, twice) strips a ward, then Troll 82261620 (rank 2, 170-210) and Cyclops 1691813655 (rank 3, 265-325) unlimited, Minotaur 949570680 (rank 5, 50 then 445) once, with Mythblade 603644867 and Myth Trap 400226031 once each and a single Myth Shield 1732025431. No summoned minions: a variant spawns one creature per encounter and the battle system has no verified summon path, so shield disruption is the supported way to make him distinct. A win gives no extra experience or gold (the quest is the reward and it is given once).",
+  "Health": 1100,
+  "Level": 13,
+  "School": "Myth",
+  "DamageBySchool": {
+    "All": 0
+  },
+  "ResistBySchool": {
+    "All": 0
+  },
+  "IncomingBoostBySchool": {
+    "All": 0
+  },
+  "PierceBySchool": {
+    "All": 10
+  },
+  "CriticalBySchool": {
+    "All": 0
+  },
+  "BlockBySchool": {
+    "All": 0
+  },
+  "FlatDamage": 0,
+  "PowerPipChance": 0,
+  "StartingPips": 0,
+  "StartingPowerPips": 0,
+  "ShadowPips": 0,
+  "Deck": [
+    {
+      "SpellID": 82261620,
+      "Name": "Troll",
+      "Copies": 0
+    },
+    {
+      "SpellID": 1691813655,
+      "Name": "Cyclops",
+      "Copies": 0
+    },
+    {
+      "SpellID": 949570680,
+      "Name": "Minotaur",
+      "Copies": 1
+    },
+    {
+      "SpellID": 1911022320,
+      "Name": "Pierce",
+      "Copies": 2
+    },
+    {
+      "SpellID": 400226031,
+      "Name": "Myth Trap",
+      "Copies": 1
+    },
+    {
+      "SpellID": 603644867,
+      "Name": "Mythblade",
+      "Copies": 1
+    },
+    {
+      "SpellID": 1732025431,
+      "Name": "Myth Shield",
+      "Copies": 1
+    }
+  ],
+  "Drops": [],
+  "XP": 0,
+  "GoldMin": 0,
+  "GoldMax": 0
+}

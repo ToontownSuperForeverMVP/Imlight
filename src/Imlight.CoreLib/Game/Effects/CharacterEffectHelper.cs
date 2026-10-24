@@ -361,6 +361,22 @@ internal static class CharacterEffectHelper {
         }
     }
 
+    private static void ApplyRatingEffect(ref List<float> schoolRatings, ref float allSchoolsRating,
+                                          string effectName, float value) {
+        if (effectName.Contains("All")) {
+            allSchoolsRating += value;
+            return;
+        }
+
+        var school = ExtractSchoolName(effectName);
+        if (school is not null && MagicSchools.GetMagicSchool(school) is not null) {
+            ApplySchoolEffect(ref schoolRatings, school, value);
+        }
+        else {
+            Logger.Warning("Could not determine the school for statistic effect {0}.", Logger.Args(effectName));
+        }
+    }
+
     private static void ApplySchoolEffect(ref List<float> effectList, string schoolName, float value) {
         var maxIndex = MagicSchools.GetMaxMagicSchoolIndex();
 

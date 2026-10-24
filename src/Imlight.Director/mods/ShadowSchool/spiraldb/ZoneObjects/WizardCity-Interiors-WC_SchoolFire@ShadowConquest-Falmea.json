@@ -1,0 +1,44 @@
+{
+  "Zone": "WizardCity/Interiors/WC_SchoolFire",
+  "Variant": "ShadowConquest-Falmea",
+  "Notes": "Shadow School, Stage D1 (ConquestEncounters.cs): the private copy of the Fire School that the hearth binding opens for one Shadow wizard on the quest ShadowSchool-Conquest-Falmea. Only a copy loaded with this variant uses this file; the public Fire School is untouched. From the zone's own gamedata.bin (read on the live server, 2026-10-23): Dalia Falmea (WC-RAV-NPC04, template 38208, the Fire trainer) stands at (787, 9.45, 99.75), facing 1.578; players arrive at Start (-134.3, -23.0, 0.5). In this copy her trainer self is left out (Remove 38208) and the game's own Wizard City Falmea combat template (DaliaFalmea-WCBoss-R7, 403089: Falmea's model, level 7 boss) stands in her place, spawned as Shadow School custom 1880001 (spiraldb/Customs/1880001.json: Fire, level 10, 950 health, a Fire deck, no drops). A Duel Circle (560, CombatSigil8Actor, as the Wizard City boss rooms of Nightshade and Foulgaze use) is on her platform. Every way out of this copy, and a lost or fled battle, goes to Ravenwood outside the Fire School's door (the Ravenwood FireSchool Exit location), never back into this copy.",
+  "Objects": [
+    {
+      "Name": "ShadowSchool Hearth Binding Circle",
+      "Notes": "The battle circle of the hearth binding, on Falmea's platform (Z 100 there).",
+      "TemplateID": 560,
+      "X": 880,
+      "Y": 0,
+      "Z": 100,
+      "Yaw": 3.1416,
+      "Scale": 1,
+      "CombatSigil": {
+        "SigilType": "CombatSigil8Actor",
+        "Radius": 700
+      }
+    }
+  ],
+  "Creatures": [
+    {
+      "Name": "ShadowSchool Bound Falmea",
+      "Notes": "DaliaFalmea-WCBoss-R7 (403089) where the trainer stands; ReplaceSpawns makes it custom 1880001.",
+      "TemplateID": 403089,
+      "X": 787,
+      "Y": 9.45,
+      "Z": 99.75,
+      "Yaw": 1.578
+    }
+  ],
+  "Remove": [
+    38208
+  ],
+  "ReplaceSpawns": {
+    "403089": 1880001
+  },
+  "Exit": {
+    "Zone": "WizardCity/WC_Ravenwood",
+    "Loc": "1616.214,5983.343,0.0001,0.3877",
+    "Triggers": [],
+    "Doors": []
+  }
+}

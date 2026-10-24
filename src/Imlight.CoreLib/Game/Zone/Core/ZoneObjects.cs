@@ -162,6 +162,9 @@ internal static class ZoneObjects {
 
         private List<ZoneObjectFile> Files => zonePath.Length == 0 ? [] : FilesFor(zonePath, variant);
 
+        /// <summary>The variant this copy of the zone was loaded with, empty for none.</summary>
+        internal string Variant => variant;
+
         /// <summary>
         /// The custom (Customs.cs) this copy of the zone spawns instead of a creature template, or 0: the Customs tab's
         /// rooms first, then the files' ReplaceSpawns.
@@ -717,7 +720,7 @@ internal static class ZoneObjects {
                 }
 
                 var key = KeyOf(file.Zone, file.Variant);
-                if (zones.ContainsKey(key)) {
+                if (zones.ContainsKey(key) && !fromMod) {
                     Logger.Warning("Zone objects {0}: another file is already for {1} {2}; skipped.",
                         Logger.Args(fileName, file.Zone, file.Variant));
 
@@ -742,6 +745,18 @@ internal static class ZoneObjects {
                 file.Encounters = [.. (file.Encounters ?? []).Where(e => e is not null && e.Boss != 0)];
                 foreach (var encounter in file.Encounters) {
                     encounter.Minions = [.. (encounter.Minions ?? []).Where(m => m != 0).Distinct()];
+                }
+
+                if (fromMod && zones.TryGetValue(key, out var existing)) {
+                    var taken = existing.Objects.Concat(existing.Creatures).Select(o => o.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                    existing.Objects.AddRange(file.Objects.Where(o => taken.Add(o.Name)));
+                    existing.Creatures.AddRange(file.Creatures.Where(o => taken.Add(o.Name)));
+                    existing.Remove.AddRange(file.Remove);
+                    foreach (var (from, to) in file.ReplaceSpawns) {
+                        existing.ReplaceSpawns.TryAdd(from, to);
+                    }
+
+                    continue;
                 }
 
                 zones[key] = file;

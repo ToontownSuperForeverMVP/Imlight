@@ -1,0 +1,150 @@
+{
+  "CustomID": 1880007,
+  "BaseTemplateID": 1475617,
+  "Name": "Arthur Wethersfield",
+  "Notes": "Shadow School, Stage D2.3: Arthur Wethersfield inside the balance binding (ConquestEncounters.cs, encounter Wethersfield). The game has no creature of his own, so the Treasure Tower's Balance floor boss (1475617, Alhazred) is the base and the custom names it for him: Balance, level 16, 1500 health, 10% pierce in every school, no resist, critical, block, power pips or starting pips. The strongest faculty fight before Ambrose without being him: Scorpion 1462253104 (rank 2, 160-200) and Locust Swarm 1965296812 (rank 3, 245-305) unlimited, Spectral Blast 254485266 (rank 4, one random hit of Fire 440, Ice 365 or Storm 550: mixed-school pressure) once, Weakness 1321504283 and Hex 92296 once each; the attacks are 85% accurate, the curses 100%. No elemental or spirit shield is in the deck: a Tri Shield or Spirit Shield only reduces Fire/Ice/Storm or Death/Myth/Life damage and the wizard is Shadow, so his defence is scripted with the engine's BossCheats instead: Balanceblade on himself at the start, Muzzle (-25% damage, -45% accuracy) on the wizard in rounds 3 and 7, a 25% shield after each damage spell that lands on him (three times), and a one-time re-balance under half health (a 35% Shadow shield and a blade). He never heals. From round 10 a growing damage boost bounds the fight. A win gives no extra experience or gold (the quest is the reward and it is given once).",
+  "Health": 1500,
+  "Level": 16,
+  "School": "Balance",
+  "DamageBySchool": {
+    "All": 0
+  },
+  "ResistBySchool": {
+    "All": 0
+  },
+  "IncomingBoostBySchool": {
+    "All": 0
+  },
+  "PierceBySchool": {
+    "All": 10
+  },
+  "CriticalBySchool": {
+    "All": 0
+  },
+  "BlockBySchool": {
+    "All": 0
+  },
+  "FlatDamage": 0,
+  "PowerPipChance": 0,
+  "StartingPips": 0,
+  "StartingPowerPips": 0,
+  "ShadowPips": 0,
+  "Deck": [
+    {
+      "SpellID": 1462253104,
+      "Name": "Scorpion",
+      "Copies": 0
+    },
+    {
+      "SpellID": 1965296812,
+      "Name": "Locust Swarm",
+      "Copies": 0
+    },
+    {
+      "SpellID": 254485266,
+      "Name": "Spectral Blast",
+      "Copies": 1
+    },
+    {
+      "SpellID": 1321504283,
+      "Name": "Weakness",
+      "Copies": 1
+    },
+    {
+      "SpellID": 92296,
+      "Name": "Hex",
+      "Copies": 1
+    }
+  ],
+  "Cheats": {
+    "Changed": {},
+    "Added": [
+      {
+        "When": "BattleStart",
+        "Target": "Self",
+        "Casts": [
+          {
+            "SpellID": 514206205,
+            "Spell": "Balanceblade",
+            "Target": "Self"
+          }
+        ],
+        "Notes": "He opens with Balanceblade (kModifyOutgoingDamage +25%, every school) on himself, free."
+      },
+      {
+        "When": "RoundStart",
+        "Round": 3,
+        "Every": 4,
+        "MaxTimes": 2,
+        "Target": "FirstEnemy",
+        "Casts": [
+          {
+            "SpellID": 1897110899,
+            "Spell": "Muzzle",
+            "Target": "FirstEnemy"
+          }
+        ],
+        "Notes": "His precision debuff: Muzzle (-25% outgoing damage and -45% accuracy on the wizard) in rounds 3 and 7."
+      },
+      {
+        "When": "PlayerCasts",
+        "Category": "Damage",
+        "OnBoss": true,
+        "MaxTimes": 3,
+        "Cooldown": 1,
+        "Target": "Self",
+        "Actions": [
+          {
+            "Do": "AddCharm",
+            "Kind": "Shield",
+            "Amount": 25,
+            "School": "",
+            "Target": "Self"
+          }
+        ],
+        "Notes": "He adapts to a wizard who hits him: a 25% shield, used up as a real one, after a damage spell lands on him; three times at most."
+      },
+      {
+        "When": "HealthBelow",
+        "Percent": 50,
+        "MaxTimes": 1,
+        "Target": "Self",
+        "Actions": [
+          {
+            "Do": "AddCharm",
+            "Kind": "Shield",
+            "Amount": 35,
+            "School": "Shadow",
+            "Target": "Self"
+          },
+          {
+            "Do": "AddCharm",
+            "Kind": "Blade",
+            "Amount": 25,
+            "School": "",
+            "Target": "Self"
+          }
+        ],
+        "Notes": "Under half health he re-balances once: a 35% shield against Shadow, the wizard's own school, and a 25% blade. No healing."
+      },
+      {
+        "When": "FromRound",
+        "Round": 10,
+        "Every": 2,
+        "Target": "Self",
+        "Actions": [
+          {
+            "Do": "Boost",
+            "Kind": "Damage",
+            "Amount": 10
+          }
+        ],
+        "Notes": "From round 10 the binding strains: +10% damage every second round, stacking."
+      }
+    ]
+  },
+  "Drops": [],
+  "XP": 0,
+  "GoldMin": 0,
+  "GoldMax": 0
+}

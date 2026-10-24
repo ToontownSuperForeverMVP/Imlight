@@ -34,7 +34,8 @@
  * A custom creature of the Customs tab (Customs.cs) has a file of this format of its own, in spiraldb-extra/Customs,
  * with its CustomID, BaseTemplateID, Name (shown in battle), Drops and Forms; For reads it by the custom's key.
  *   Drops                    drop table names (DropTables): what a win over it drops, instead of the creature's own
- *                            (NpcDropTable). A boss of the Bosses tab can have them too.
+ *                            (NpcDropTable). Omitted keeps the creature's drops; an empty list suppresses them. A boss
+ *                            of the Bosses tab can have them too.
  *   XP, GoldMin, GoldMax     what a win over it gives, instead of what its drop tables and the game give. Gold is a
  *                            random amount from GoldMin to GoldMax. RewardShared: true splits them between the wizards
  *                            who fought; otherwise each wizard gets them all. Counted from the next win.
@@ -146,21 +147,8 @@ internal static class BossOverrides {
 
         BossOverride boss = null;
         try {
-            boss = JsonSerializer.Deserialize<BossOverride>(File.ReadAllText(file), s_options);
+            boss = Parse(File.ReadAllText(file), templateId);
             if (boss is not null) {
-                boss.TemplateID = templateId;
-                if (Customs.IsCustom(templateId)) {
-                    boss.CustomID = Customs.IdOf(templateId);
-                    boss.Drops = boss.Drops?.Where(d => !string.IsNullOrWhiteSpace(d)).ToList();
-                }
-
-                boss.Deck = boss.Deck?.Where(c => c is not null && c.SpellID != 0).ToList();
-                boss.DamageBySchool = Row(boss.DamageBySchool, boss.Damage);
-                boss.ResistBySchool = Row(boss.ResistBySchool, boss.Resist);
-                boss.IncomingBoostBySchool = Row(boss.IncomingBoostBySchool, null);
-                boss.PierceBySchool = Row(boss.PierceBySchool, null);
-                boss.CriticalBySchool = Row(boss.CriticalBySchool, boss.Critical);
-                boss.BlockBySchool = Row(boss.BlockBySchool, boss.Block);
                 Logger.Information("Boss changes for {0} ({1}) read.", Logger.Args(boss.Name, templateId));
             }
         }
@@ -169,6 +157,40 @@ internal static class BossOverrides {
         }
 
         s_read[templateId] = (written, boss);
+
+        return boss;
+    }
+
+    /// <summary>
+    /// The drop tables to use for a creature. Omitted custom drops keep its own tables; an explicit empty list means
+    /// the custom intentionally has no drops.
+    /// </summary>
+    internal static IReadOnlyList<string> DropTablesFor(BossOverride changes, IReadOnlyList<string> creatureDropTables) {
+        var drops = changes?.Drops;
+
+        return drops ?? creatureDropTables ?? [];
+    }
+
+    /// <summary>A file's changes as For reads them, for the creature template (or custom key) given.</summary>
+    internal static BossOverride Parse(string json, ulong templateId) {
+        var boss = JsonSerializer.Deserialize<BossOverride>(json, s_options);
+        if (boss is null) {
+            return null;
+        }
+
+        boss.TemplateID = templateId;
+        if (Customs.IsCustom(templateId)) {
+            boss.CustomID = Customs.IdOf(templateId);
+            boss.Drops = boss.Drops?.Where(d => !string.IsNullOrWhiteSpace(d)).ToList();
+        }
+
+        boss.Deck = boss.Deck?.Where(c => c is not null && c.SpellID != 0).ToList();
+        boss.DamageBySchool = Row(boss.DamageBySchool, boss.Damage);
+        boss.ResistBySchool = Row(boss.ResistBySchool, boss.Resist);
+        boss.IncomingBoostBySchool = Row(boss.IncomingBoostBySchool, null);
+        boss.PierceBySchool = Row(boss.PierceBySchool, null);
+        boss.CriticalBySchool = Row(boss.CriticalBySchool, boss.Critical);
+        boss.BlockBySchool = Row(boss.BlockBySchool, boss.Block);
 
         return boss;
     }

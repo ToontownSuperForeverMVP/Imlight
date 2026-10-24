@@ -1,0 +1,70 @@
+{
+  "CustomID": 1880002,
+  "BaseTemplateID": 1475612,
+  "Name": "",
+  "Notes": "Shadow School, Stage D2: Lydia Greyrose inside the frost binding (ConquestEncounters.cs, encounter Greyrose). The base is the game's own Lydia Greyrose creature (1475612, Ice, the Treasure Tower floor boss), so the custom supplies the whole battle profile: Ice, level 11, 1000 health, no pierce, critical, block, power pips or starting pips, and no base flat damage. Her deck is the Ice School's defense and controlled pressure (verified spell templates): Frost Beetle 1496157882 and Snow Serpent 219826034 (unlimited), Ice Wyvern 829983860 and Frostbite 1050086956 (once each), Tower Shield 432324968 and Iceblade 2032132496 (twice each), Freeze 1887199642 (once). A win gives no extra experience or gold (the quest is the reward and it is given once).",
+  "Health": 1000,
+  "Level": 11,
+  "School": "Ice",
+  "DamageBySchool": {
+    "All": 0
+  },
+  "ResistBySchool": {
+    "All": 0
+  },
+  "PierceBySchool": {
+    "All": 0
+  },
+  "CriticalBySchool": {
+    "All": 0
+  },
+  "BlockBySchool": {
+    "All": 0
+  },
+  "FlatDamage": 0,
+  "PowerPipChance": 0,
+  "StartingPips": 0,
+  "StartingPowerPips": 0,
+  "ShadowPips": 0,
+  "Deck": [
+    {
+      "SpellID": 1496157882,
+      "Name": "Frost Beetle",
+      "Copies": 0
+    },
+    {
+      "SpellID": 219826034,
+      "Name": "Snow Serpent",
+      "Copies": 0
+    },
+    {
+      "SpellID": 829983860,
+      "Name": "Ice Wyvern",
+      "Copies": 1
+    },
+    {
+      "SpellID": 1050086956,
+      "Name": "Frostbite",
+      "Copies": 1
+    },
+    {
+      "SpellID": 432324968,
+      "Name": "Tower Shield",
+      "Copies": 2
+    },
+    {
+      "SpellID": 2032132496,
+      "Name": "Iceblade",
+      "Copies": 2
+    },
+    {
+      "SpellID": 1887199642,
+      "Name": "Freeze",
+      "Copies": 1
+    }
+  ],
+  "Drops": [],
+  "XP": 0,
+  "GoldMin": 0,
+  "GoldMax": 0
+}

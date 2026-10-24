@@ -160,7 +160,6 @@ internal static class GameEffectFactory {
             default: break;
         }
 
-        return effect;
     }
 
     private static TransformationEffect CreateTransformationEffect(TransformationEffectInfo info, uint itemSlotId) {

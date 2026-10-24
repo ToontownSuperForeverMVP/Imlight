@@ -1,0 +1,44 @@
+{
+  "Zone": "WizardCity/WC_Ravenwood",
+  "Variant": "ShadowConquest-Wethersfield",
+  "Notes": "Shadow School, Stage D2.3 (ConquestEncounters.cs): the private copy of Ravenwood that Wethersfield's binding opens for one Shadow wizard on the quest ShadowSchool-Conquest-Wethersfield. Only a copy loaded with this variant uses this file; the public Ravenwood is untouched. From the zone's own gamedata.bin (read on a QA server, 2026-10-23): Arthur Wethersfield (WC-RAV-NPC09, template 81103, the Balance instructor) stands in Ravenwood itself at (558.59, 444.9666, 7.176836), orientation 0.2885804, beside a steamer trunk (324085) at (542, 447, 0.0), so the ground there is roughly Z 0 to 7. The game's own conversation stand-in for him ('Player Stand In - Arthur Weathersfield') is at (509.9329, 270.5928, -30.5), 175 units away on lower ground, and the battle circle (560, CombatSigil8Actor, radius 400) is placed exactly there. Players arrive at, and leave to, the game's own Loc_WC-COMMONS-MAIN-002-BALANCE (322.9819, -171.081, -28.78595), 480 units from the circle and so outside its radius. The game has no creature of his own: the Balance floor boss of the Treasure Tower (1475617, Alhazred) stands in his place, named for him and spawned as Shadow School custom 1880007 (spiraldb/Customs/1880007.json: Balance, level 16, 1500 health, a Balance deck with scripted weaknesses and adaptive shields). In this copy his NPC self is left out (Remove 81103). Because the copy and its exit are the same zone, every transfer out of it forces a reload (ConquestWorld.Leave, ZoneService). The slope between his Z 7.18 and the circle's Z -30.5 and the terrain around the circle are NOT TESTED in the client; no pathNodeData/collision was read. Every way out of this copy, and a lost or fled battle, goes to the Balance location above, never back into this copy.",
+  "Objects": [
+    {
+      "Name": "ShadowSchool Balance Binding Circle",
+      "Notes": "The battle circle of the balance binding.",
+      "TemplateID": 560,
+      "X": 509.9329,
+      "Y": 270.5928,
+      "Z": -30.5,
+      "Yaw": 3.1416,
+      "Scale": 1,
+      "CombatSigil": {
+        "SigilType": "CombatSigil8Actor",
+        "Radius": 400
+      }
+    }
+  ],
+  "Creatures": [
+    {
+      "Name": "ShadowSchool Bound Balance",
+      "Notes": "The stand-in creature (1475617) where the trainer stands; ReplaceSpawns makes it custom 1880007.",
+      "TemplateID": 1475617,
+      "X": 558.59,
+      "Y": 444.9666,
+      "Z": 7.176836,
+      "Yaw": 0.2885804
+    }
+  ],
+  "Remove": [
+    81103
+  ],
+  "ReplaceSpawns": {
+    "1475617": 1880007
+  },
+  "Exit": {
+    "Zone": "WizardCity/WC_Ravenwood",
+    "Loc": "322.9819,-171.081,-28.7859,-2.774",
+    "Triggers": [],
+    "Doors": []
+  }
+}

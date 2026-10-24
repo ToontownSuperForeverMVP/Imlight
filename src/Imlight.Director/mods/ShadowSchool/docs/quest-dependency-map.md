@@ -114,6 +114,8 @@ The template reward entries point to drop tables, so their actual loaded table v
 
 This exposes a reward-coverage issue to handle during implementation planning: the two randomized school-specific reward pools for the Shadow route omit Shadow items. Do not silently edit those shared drop tables in C2; determine whether a Shadow-only reward path or a narrowly scoped table extension is compatible with non-Shadow reward behavior before changing them.
 
+**Resolved in C2.2:** the mod's `spiraldb/DropTables` overrides append one Shadow-only row (`ShadowSchool-Ring-5` to `WC-OLDE-MAIN-003A`, `ShadowSchool-Athame-5` to `WC-HAUNTED-MAIN-001`) and leave every original row, XP and gold value as installed; see `continuation-status.md`, Stage C2.2.
+
 ### What the installed story actually says
 
 - **Bartleby / Foulgaze / Order of the Fang:** In `WizQst1731AB`, Ambrose explains that Bartleby sees through time with the Eyes of History and the Future, that the stolen Eye of History has left Bartleby's memory addled and vision limited, and that Foulgaze must be investigated. He connects Malistaire to the Order of the Fang while explicitly saying they do not yet know why. These are existing dialogue beats during the reunion quest; there is no separate Eye recovery goal in this slice.
@@ -145,6 +147,147 @@ Before adaptation code, add an immutable presentation resolver keyed at minimum 
 
 Other risks: quest start/turn-in dialogue may be emitted through several components and `QuestService` paths; journal/hint/objective strings are not the same as `MSG_ACTORDIALOG`; per-player changes in shared locations require two-client isolation validation; quest state must remain per character on reconnect; a sequential actor conversation is shared even if text differs per wizard; title/completion strings may be client-cached; the six Nightside reward spell effects must not be mistaken for Umbral Sight; and the existing Shadow enrollment prerequisite must remain enforced.
 
-### First independently testable C2 slice (not implemented)
+### First independently testable C2 slice — implemented in C2.1 (2026-10-23)
+
+**Status:** built as `ShadowMainlineDialogue.AmbroseReunion` on the core `QuestDialogueResolver` (see the Stage C2.1 section of `continuation-status.md`). Script manifest row: quest `WC-OLDE-MAIN-003A`; NPC Ambrose (`WC-HUB-NPC01`, goal `Goal`, tag `Completion`); vanilla keys `WizQst1731AB_00000003`–`_00000008`; Shadow condition = Shadow school + `WC-COMMONS-MAIN-002-SHADOW_Complete` + the three street flags + reunion not yet complete; replacement = three added unvoiced lines (`ShadowSchool_ReunionAmbroseStreets`, `_ReunionAmbroseForbidden`, `_ReunionAmbroseEye`) placed between the six kept, voiced canonical lines; journal/hint unchanged; objectives unchanged; pre-pact only (no pact exists yet). Automated tests pass; client rendering is NOT TESTED. The original proposal follows.
 
 Implement one resolver-backed Shadow-only **Ambrose reunion response** in `WC-OLDE-MAIN-003A` after the three street flags, leaving its six goals, AND prerequisites and reward byte-for-byte unchanged. First make a structural contract check that canonical template data is unchanged and that resolver output is selected only for a Shadow recipient. Then test two same-zone recipients (Shadow and a non-Shadow wizard) against the same Ambrose interaction and verify distinct per-character text while both receive the same quest/objective/reward state. This slice exercises the hardest prerequisite—recipient-specific dialogue from shared canonical quest data—without altering Nightside or introducing Umbral Sight early. Actual client playback, locale wrapping and audio treatment remain required acceptance evidence; a unit/structure pass alone is not visual or gameplay proof.
+
+### Stage C3 — Umbral Sight implemented (2026-10-23)
+
+The origin above is now enforced in code. `WC-COMMONS-MAIN-004` is unchanged; the mod records, per character, a trail of
+the run (accepted from Ambrose, then `Goal` Nightside, `Goal 1` Mortis, `Goal 2` Death School, `Goal 3` Dworgyn, `Goal 4`
+Ambrose) and unlocks `ShadowSchool_UmbralSight` only when the quest completes through play with every step on the trail.
+QA commands, late-join replays and out-of-order goals leave a gap and never unlock it. The C2.3 afterimage lines
+(`Goal 4` Completion) now also require the trail through Dworgyn, so a QA completion of Goal 4 shows the canonical return.
+After the unlock: an unvoiced Ambrose opener in `WC-COMMONS-MAIN-005` Prep (the sight has lasted; see Vespera), and the
+mod quest `ShadowSchool-UmbralSight-Lesson` (Vespera, gated on the registry entry, no reward). Details:
+`continuation-status.md`, Stage C3.
+
+### Stage D1 — first Ravenwood conquest encounter (2026-10-23)
+
+`ShadowSchool-Conquest-Falmea` (The Hearth Binding): Shadow only, requires `ShadowSchool_UmbralSight`, `WC-COMMONS-MAIN-004` and `ShadowSchool-UmbralSight-Lesson` complete; offered by Vespera. Goals: anchor (Umbral Sight look at Falmea, Fire School) -> defeat Falmea in a private copy of `WC_SchoolFire` (variant `ShadowConquest-Falmea`) -> return to Vespera. No canonical quest, goal, reward or NPC changed. Details: `continuation-status.md`, Stage D1.
+
+### Stage D1.5 — the encounter's transfer and navigation (2026-10-23)
+
+The same-zone handoff needed `ForceReload` (without it `ZoneService` teleports inside the public Fire School and the variant
+copy never loads), and the quest's goals now carry their client navigation (`ShadowSchool_ConquestFalmeaLocation` -> Fire
+School for the anchor and duel; the Library Book Stacks for the return to Vespera, with the copied Muldoon tag removed). Its
+prerequisites, completion flags, goals, events and reward-free completion are unchanged. Stage D2 adds one overarching
+`ShadowSchool-Conquest` quest whose per-instructor milestone goals listen for the same `ShadowSchool_Conquest_<Id>_Defeated`
+events, and keeps the per-encounter registry as the gate for the Ambrose finale. Details: `continuation-status.md`, Stage D1.5.
+
+### Stage D2.1 — implemented (2026-10-23)
+
+The installed Shadow-only campaign quest is `ShadowSchool-Conquest`. It requires the Umbral Sight unlock, completion of
+`WC-COMMONS-MAIN-004`, and the Umbral Sight lesson. Its seven milestone goals are ordered Falmea, Lydia Greyrose, Halston
+Balestrom, Cyrus Drake, Moolinda Wu, Malorn Ashthorn, and Arthur Wethersfield. Only Falmea and Greyrose currently have
+registered encounters and chapter quests, so the later five milestones are intentionally unreachable. Ambrose is not in
+the quest and remains inaccessible as a finale until a future stage.
+
+The playable chapters are:
+
+| Order | Quest | Instructor / public template | Private encounter | Combat identity |
+|---|---|---|---|---|
+| 1 | `ShadowSchool-Conquest-Falmea` | Falmea / existing Fire School trainer | `ShadowConquest-Falmea`, `WC_SchoolFire` | existing combat representation, custom 1880001 |
+| 2 | `ShadowSchool-Conquest-Greyrose` | Lydia Greyrose / 38172 | `ShadowConquest-Greyrose`, `WC_SchoolFrost` | combat representation 1475612, custom 1880002 |
+
+Each chapter retains the anchor -> private duel -> return-to-Vespera flow and no quest completion reward. Verified battle
+wins are saved to the character's encounter registry before their journal events are queued; quest event validators only
+accept a matching event while the registered encounter has a persisted win. Reconnect replay and reaccept replay rebuild
+the chapter and campaign journal in order. Command completion and direct unverified milestone events cannot create
+conquest credit. Loss, flee, unrelated combat, another character's battle, and duplicate outcomes do not advance a
+milestone or repeat a reward.
+
+Greyrose uses the validated Ice combat representation and custom profile `1880002`, with an Ice-only deck, 1000 health,
+zero XP/gold, and explicit empty drops. Her room variant removes Greyrose only inside the wizard's private Frost School
+copy and replaces combat representation 1475612 with the custom creature associated with battle circle 560. Same-zone
+entry requests `ForceReload`; the original Falmea/Fire room and public instructor templates remain intact. Explicit empty
+custom drop lists are now honored by the combat loot resolver; omitted lists continue to inherit the base creature's
+tables.
+
+Automated evidence: `ConquestCampaignTests` + `ConquestEncounterTests` 85/85 (four consecutive passing runs), full CoreLib
+251/251, installer 2/2, CoreLib and Director Release builds 0 errors, and `git diff --check` clean. The Director deployment
+loaded ShadowSchool and its 14 SpiralDB files on an isolated QA database; installed client resources report current.
+**GRAPHICAL CLIENT ACCEPTANCE: NOT TESTED** — no instructor battle, journal rendering, NPC animation, combat-circle
+presentation, or teleport visual has been verified through the graphical client. See the D2.1 and D2.2 sections of
+`continuation-status.md` for exact deployment evidence and the next instructor prerequisites.
+
+### Stage D2.2 — Balestrom and Drake implemented (2026-10-23)
+
+Chapters 3 and 4 of `ShadowSchool-Conquest` now exist; the last three milestones (Wu, Ashthorn, Wethersfield) remain
+unreachable and Ambrose's finale does not exist. Each chapter has the same shape as Falmea/Greyrose (anchor -> private duel
+-> return to Vespera, no reward) and now additionally requires the previous chapter's `Complete` quest entry; the
+framework (`ConquestEncounters.MeetsPrerequisites`) requires **every** earlier encounter complete in the persisted registry,
+not only the one before.
+
+| Order | Quest | Public trainer | Private encounter | Combat identity |
+|---|---|---|---|---|
+| 3 | `ShadowSchool-Conquest-Balestrom` | Halston Balestrom, `WC-RAV-NPC05` / 38141, Storm School (938.90, -1.20, 202.09) | `ShadowConquest-Balestrom`, `WC_SchoolStorm`, anchor binding `StormClassroom` | creature 1475613, custom 1880003 |
+| 4 | `ShadowSchool-Conquest-Drake` | Cyrus Drake, `WC-RAV-NPC02` / 38206, Myth School (807.46, 13.78, 100.00) | `ShadowConquest-Drake`, `WC_SchoolMyth`, anchor binding `MythClassroom` | creature 1475614, custom 1880004 |
+
+Campaign milestones `Balestrom` and `Drake` now navigate to their schools (`ShadowSchool_ConquestBalestromLocation`,
+`ShadowSchool_ConquestDrakeLocation`). Exits go to Ravenwood outside each school's door (Storm `2752.043,818.4474`,
+Myth `-3281.591,3876.725`, from the Ravenwood `StormSchool Exit` / `MythSchool Exit` locations). Arrival is the zone's own
+`Start`. Battle circles (template 560, `CombatSigil8Actor`, radius 700) sit 90 units from the instructor at the instructor's
+own Z; the Storm and Myth zones have no path-node data, so platform extent is **NOT TESTED in the client**.
+
+Also corrected: the Greyrose chapter named a portrait file that is not a game file (`Art_Portrait_Lydia_Greyrose.dds`); it
+now uses the game's `Portrait_Human_Greyrose_A_NPC.dds`.
+
+Fight design (all spells read from installed templates on a QA server): Balestrom, Storm, level 12, **900 hp**, 15% incoming
+boost against Shadow, 70%-accurate Thunder Snake/Lightning Bats (unlimited), Storm Shark, Kraken (4 pips, 520-580), Stormblade,
+Storm Trap, no wards. Drake, Myth, level 13, 1100 hp, 10% pierce, Pierce x2 (removes a ward), Troll/Cyclops unlimited,
+Minotaur, Myth Trap, Mythblade, one Myth Shield. **No minions**: a variant spawns one creature per encounter and no summon
+path is verified, so Drake's distinction is ward removal. **Fight balance is NOT TESTED** against a played Shadow wizard.
+
+
+### Stage D2.3 — Wu, Ashthorn and Wethersfield implemented; all seven instructors playable (2026-10-23)
+
+Chapters 5, 6 and 7 of `ShadowSchool-Conquest` now exist, with the same shape as the first four (anchor -> private duel ->
+return to Vespera, no reward, previous chapter's `Complete` required, every earlier encounter complete in the persisted
+registry). The seventh campaign logic entry now completes the quest. Ambrose's finale has no encounter, goal, binding or
+quest and stays locked.
+
+| Order | Quest | Public NPC (installed placement) | Private encounter | Combat identity |
+|---|---|---|---|---|
+| 5 | `ShadowSchool-Conquest-Wu` | Moolinda Wu, `WC-RAV-NPC01` / 38204, `WC_SchoolLife` (760.20, 15.49, 100.00) | `ShadowConquest-Wu`, `WC_SchoolLife`, anchor `LifeClassroom` (r 350) | creature 1475615 (her own), custom 1880005 |
+| 6 | `ShadowSchool-Conquest-Ashthorn` | Malorn Ashthorn, `WC-RAV-NPC08` / 81102, **`WC_Ravenwood`** (229.29, 6034.79, -30.48) | `ShadowConquest-Ashthorn`, `WC_Ravenwood`, anchor `DeathInterim` (r 300) | stand-in 1475616 (Dworgyn), custom 1880006 named "Malorn Ashthorn" |
+| 7 | `ShadowSchool-Conquest-Wethersfield` | Arthur Wethersfield, `WC-RAV-NPC09` / 81103, **`WC_Ravenwood`** (558.59, 444.97, 7.18) | `ShadowConquest-Wethersfield`, `WC_Ravenwood`, anchor `BalanceCircle` (r 300) | stand-in 1475617 (Alhazred), custom 1880007 named "Arthur Wethersfield" |
+
+Dialogue personas and portraits are the game's own (`WC-RAV-NPC01/08/09_Persona`; `Portrait_Cow_Wu_A_NPC.dds`,
+`Art_Portrait_Malorn_Ashthorn.dds`, `Dog_Wethersfield_A_NPC.dds`, read from installed quest data). Campaign milestones
+navigate to `WC_SchoolLife` and `WC_Ravenwood` (`ShadowSchool_ConquestWuLocation`, `...AshthornLocation`,
+`...WethersfieldLocation`). Exits: Wu goes to the Ravenwood `LifeSchool Exit` (`-2646.668,797.2547`); Ashthorn and
+Wethersfield arrive at and leave to the game's `Loc_WC-COMMONS-MAIN-002-DEATH` (641.84, 5968.79, -28.79) and
+`Loc_WC-COMMONS-MAIN-002-BALANCE` (322.98, -171.08, -28.79), both outside their circle's radius and every binding's reach.
+
+Because Ashthorn and Wethersfield live in Ravenwood, their copy, anchor and exit are one zone: `ConquestWorld.Leave` forces a
+reload for a same-zone exit, and `ZoneService.LeavesVariantCopy` makes any transfer to the plain zone from a noted variant copy
+of it (duel flee/loss `MSG_SENDTOHUB`, doors, triggers) reload and forget the copy. The Ravenwood copies include the plain
+Ravenwood file's extra sigils like any copy; only the owner is in them.
+
+Battle circles (template 560, `CombatSigil8Actor`): Wu at (850.20, 15.49, 100.0), 90 units from her, same convention as the
+other four school rooms (radius 700). Ashthorn at (297.50, 6041.75, -30.48), Wethersfield at (509.93, 270.59, -30.50): the
+game's own `Player Stand In` objects for them (radius 300 and 400). Ravenwood has no path-node data read here; **ground
+extent, Wethersfield's slope (his Z 7.18 versus -30.5) and Wu's platform are NOT TESTED in the client**.
+
+Scripted fights (the creature AI cannot heal, ward or drain reliably; see `continuation-status.md`, Stage D2.3): each custom
+carries engine BossCheats (`"Cheats": {"Added": [...]}`) with `MaxTimes` limits and an enrage from round 9/10:
+Wu mends twice (Pixie 400) and casts Spirit Armor four times; Ashthorn drains with Vampire (x4) and Wraith (x1), curses,
+and steals a pip from costly casts (x3); Wethersfield opens with Balanceblade, casts Muzzle twice, shields after hits (x3)
+and re-balances once against Shadow. **Fight balance and the scripts are NOT TESTED in a live battle.**
+
+After the seventh victory the registry holds seven `Defeated`/`Complete` stages; `ConquestEncounters.AllInstructorsDefeated`
+(stage >= Defeated for all seven) is true at the moment the seventh victory is saved, `AllInstructorsComplete` once the last
+chapter is handed in. Both require a Shadow wizard whose Umbral Sight works.
+
+### Stage D2.4 — full-chain audit and D3 gate evidence (2026-10-23)
+
+The current source gate for Ambrose is `ConquestEncounters.AllInstructorsComplete(wizard)`: Umbral Sight must work, and each of the seven encounter registry stages must be `Complete` with that chapter's quest completion flag. `AllInstructorsDefeated(wizard)` is the earlier post-battle predicate (all seven durable stages `Defeated` or `Complete`); it does not prove that Wethersfield's return conversation and final chapter turn-in happened. D3's quest offer should use `AllInstructorsComplete`. Neither predicate writes state or can be advanced by a campaign quest command.
+
+The server-side completion chain is now exercised end to end in `SevenVerifiedInstructorVictoriesCompleteEveryChapterAndEveryCampaignMilestone`: each encounter is opened at its anchor, earns a matching private-copy outcome, passes the verified-event validator, advances exactly its active campaign milestone, completes the return goal and records the chapter completion. The milestone becomes complete only after a valid per-character victory. Invalid commands/events, wrong variants, helper/other-character outcomes, unrelated creatures, loss/flee, malformed state and incomplete earlier chapters remain rejected by the existing regression coverage. **SIMULATED:** this drives the real mod event hooks with deterministic server outcomes; it does not play a graphical duel.
+
+For placement triage, the school-room circles for Balestrom and Drake are each 90 horizontal units from the instructor and use the instructor's Z. Wu's circle is likewise 90 units from the NPC on nominal Z=100. Wethersfield's Ravenwood NPC is at Z=7.18 while the circle sits on the nearby `Player Stand In` at Z=-30.5. Treat those as coordinates from installed data, not floor-contact proof. Ravenwood collision/slope, all circle activations, the presentation of the Dworgyn/Alhazred stand-ins, and every battle remain **NOT TESTED** in a graphical client.
+
+The full evidence and validation table is in `stage-d2.4-audit.md`. The D2.4 run passed 252 Conquest + Umbral Sight tests three times, all 367 ShadowSchool tests three times, CoreLib 380/380, installer 2/2, both Release builds and an isolated QA startup on a fresh `ShadowSchoolD24Audit` database. Startup loaded ShadowSchool and 19 SpiralDB files and reached ready state; it did not start a battle or execute the 15 boss scripts.
